@@ -43,67 +43,66 @@ body {
 .logo {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     cursor: pointer;
     transition: transform 0.3s ease;
 }
 
 .logo-mark {
-    width: 24px;
-    height: 24px;
-    background: #ff8a65;
-    border-radius: 6px;
+    width: 28px;
+    height: 28px;
+    border: 3px solid #ff8a65;
+    border-radius: 50%; /* レンズ・記憶の円を表現 */
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .logo-mark::after {
     content: '';
+    width: 10px;
+    height: 10px;
+    background: #ff8a65;
+    border-radius: 50%; /* 中心に記録のコア */
+    box-shadow: 0 0 10px rgba(255, 138, 101, 0.8);
+}
+
+.logo-mark::before {
+    content: '';
     position: absolute;
-    top: 50%;
-    left: 55%;
-    transform: translate(-50%, -50%);
-    border-left: 8px solid #000;
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;
+    top: -2px;
+    right: -2px;
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    border-radius: 50%; /* フラッシュ・記憶の煌めき */
 }
 
 .logo-text {
-    font-size: 1.5rem;
-    font-weight: 900;
-    letter-spacing: 1px;
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
     color: #fff;
-    background: none;
-    -webkit-text-fill-color: initial;
+    font-family: 'M PLUS Rounded 1c', sans-serif; /* 親しみやすいフォント */
 }
 
 .logo-text span {
     color: #ff8a65;
 }
 
-.top-nav {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-/* Button UI - Minimalist & Pro */
+/* Button UI - Friendly & Accessible */
 .btn-primary {
     background: #fff;
     color: #000;
     border: none;
-    border-radius: 8px; /* 角を少し立たせる */
-    font-size: 0.85rem;
-    font-weight: 800;
-    padding: 0.6rem 1.2rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 0.6rem 1.4rem;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
     letter-spacing: 0.5px;
-    box-shadow: none;
-    transition: all 0.2s ease;
-}
-
-.btn-primary:hover {
-    background: #ff8a65;
-    color: #fff;
-    transform: translateY(-2px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nav-item {
@@ -111,11 +110,12 @@ body {
     border: none;
     color: var(--text-muted);
     font-weight: 700;
-    font-size: 0.85rem;
-    letter-spacing: 1px;
+    font-size: 0.9rem;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    letter-spacing: 0.5px;
     cursor: pointer;
-    padding: 0.6rem 1rem;
-    border-radius: 8px;
+    padding: 0.6rem 1.2rem;
+    border-radius: 12px;
     transition: all 0.2s ease;
 }
 
