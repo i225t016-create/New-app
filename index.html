@@ -12,79 +12,85 @@
 </head>
 <body class="light-theme">
     <header class="main-header">
-        <nav class="container">
+        <div class="container header-flex">
             <div class="logo">🎥 ぶい<span>ログ！</span></div>
-            <ul class="nav-links">
-                <li><a href="#home">ホーム</a></li>
-                <li><a href="#gallery">ギャラリー</a></li>
-                <li><a href="#about">自己紹介</a></li>
-            </ul>
-        </nav>
+            <div id="auth-status" class="auth-status">
+                <button id="login-trigger" class="btn-text">ログイン</button>
+            </div>
+        </div>
     </header>
 
     <main>
-        <section id="home" class="hero">
-            <div class="container hero-content">
-                <div class="hero-text-box">
-                    <h1 class="reveal">日々の「楽しい」を、<br>動画でお届け！</h1>
-                    <p class="reveal">お散歩したり、何かを作ったり。私が見た素敵な景色や、ちょっとした日常をゆる〜く発信しています。</p>
-                    <a href="#gallery" class="btn btn-primary reveal">動画を見てみる</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="gallery" class="gallery">
+        <!-- メインコンテンツ領域（フィード・マイページ） -->
+        <div id="content-container">
             <div class="container">
-                <div class="section-header">
-                    <h2 class="reveal">みんなに見せたい思い出たち</h2>
-                    <div class="tab-controls reveal">
-                        <button class="tab-btn active" data-tab="vlog">動画（Vlog）</button>
-                        <button class="tab-btn" data-tab="trip">旅の記録（旅ログ）</button>
-                    </div>
-                    <div class="filters reveal" id="vlog-filters">
-                        <button class="filter-btn active" data-filter="all">ぜんぶ</button>
-                        <button class="filter-btn" data-filter="おでかけ">おでかけ</button>
-                        <button class="filter-btn" data-filter="ガジェット">ガジェット</button>
-                        <button class="filter-btn" data-filter="日常">日常</button>
-                    </div>
+                <div class="tab-controls reveal">
+                    <button class="tab-btn active" data-tab="feed">みんなの投稿</button>
+                    <button class="tab-btn" data-tab="mypage">自分の記録</button>
                 </div>
                 <div id="content-grid" class="vlog-grid reveal">
-                    <!-- JavaScriptでここに内容が入ります -->
+                    <!-- JavaScriptで投稿カードが入ります -->
                 </div>
             </div>
-        </section>
-
-        <section id="about" class="about">
-            <div class="container about-flex">
-                <div class="about-text reveal">
-                    <h2>こんにちは！</h2>
-                    <p>動画を作ることが大好きなクリエイターです。日常の何気ない瞬間を「宝物」に変えるような、あたたかい動画作りを目指しています。ゆっくりしていってね！</p>
-                    <div class="social-links">
-                        <a href="#" class="social-icon">YouTube</a>
-                        <a href="#" class="social-icon">Instagram</a>
-                    </div>
-                </div>
-                <div class="about-stats reveal">
-                    <div class="stat-card">
-                        <h3>100本</h3>
-                        <p>つくった動画</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>5万人</h3>
-                        <p>フォロワーさん</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        </div>
     </main>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 ぶいログ！ ｜ 見てくれてありがとう！</p>
-        </div>
-    </footer>
+    <!-- 下部ナビゲーション（SNS風） -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" data-view="feed">🏠<span>ホーム</span></button>
+        <button class="nav-item" id="post-trigger">➕<span>投稿</span></button>
+        <button class="nav-item" data-view="mypage">👤<span>マイページ</span></button>
+    </nav>
 
-    <!-- 動画を見るためのポップアップ -->
+    <!-- 認証モーダル -->
+    <div id="auth-modal" class="modal">
+        <div class="modal-content auth-form-content">
+            <span class="close-auth-modal">&times;</span>
+            <div id="auth-forms">
+                <div id="login-form">
+                    <h2>おかえりなさい！</h2>
+                    <input type="email" id="login-email" placeholder="メールアドレス">
+                    <input type="password" id="login-password" placeholder="パスワード">
+                    <button id="login-btn" class="btn btn-primary">ログイン</button>
+                    <p>アカウントを持っていない？ <a href="#" id="to-signup">新規登録</a></p>
+                </div>
+                <div id="signup-form" style="display:none;">
+                    <h2>アカウント作成</h2>
+                    <input type="text" id="signup-name" placeholder="お名前">
+                    <input type="email" id="signup-email" placeholder="メールアドレス">
+                    <input type="password" id="signup-password" placeholder="パスワード">
+                    <button id="signup-btn" class="btn btn-primary">登録する</button>
+                    <p>すでにアカウントがある？ <a href="#" id="to-login">ログイン</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 投稿モーダル -->
+    <div id="post-modal" class="modal">
+        <div class="modal-content post-form-content">
+            <span class="close-post-modal">&times;</span>
+            <h2>新しい思い出を投稿</h2>
+            <div class="post-form">
+                <input type="text" id="post-title" placeholder="タイトル (例: 春の京都旅)">
+                <input type="text" id="post-location" placeholder="場所 (例: 京都 / 嵐山)">
+                <input type="text" id="post-thumbnail" placeholder="画像URL (Unsplashなど)">
+                <textarea id="post-description" placeholder="この旅行の感想を一言"></textarea>
+                
+                <div class="timeline-input-area">
+                    <h3>タイムライン (1件目)</h3>
+                    <input type="text" id="tl-time-1" placeholder="時間 (例: 10:00)">
+                    <input type="text" id="tl-event-1" placeholder="できごと (例: 到着！)">
+                    <input type="text" id="tl-mood-1" placeholder="気分 (例: ワクワク)">
+                    <textarea id="tl-text-1" placeholder="詳細な思い出"></textarea>
+                </div>
+                
+                <button id="submit-post-btn" class="btn btn-primary">投稿を公開する</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 動画・旅ログ詳細用モーダル（既存） -->
     <div id="video-modal" class="modal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
@@ -92,12 +98,12 @@
                 <iframe id="modal-iframe" src="" frameborder="0" allowfullscreen></iframe>
             </div>
             <div class="modal-info">
-                <h3 id="modal-title"></h3>
-                <p id="modal-description"></p>
+                <h2 id="modal-title"></h2>
+                <div id="modal-description"></div>
             </div>
         </div>
     </div>
 
-    <script src="js/app.js"></script>
+    <script type="module" src="js/app.js"></script>
 </body>
 </html>
