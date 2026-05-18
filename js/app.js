@@ -14,8 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const contentGrid = document.getElementById('content-grid');
     const navItems = document.querySelectorAll('.nav-item');
     
+    // PC & Mobile triggers
+    const postTriggers = [document.getElementById('post-trigger'), document.getElementById('mobile-post-trigger')];
+    const infoTriggers = [document.getElementById('demo-info-trigger'), document.getElementById('mobile-info-trigger')];
+    
     const postModal = document.getElementById('post-modal');
-    const postTrigger = document.getElementById('post-trigger');
     const closePostModal = document.querySelector('.close-post-modal');
     
     const videoModal = document.getElementById('video-modal');
@@ -23,9 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalTitle = document.getElementById('modal-title');
     const modalDescription = document.getElementById('modal-description');
     const journeyMapContainer = document.getElementById('journey-map');
+    const pulseGraphBody = document.getElementById('pulse-graph');
 
     const demoInfoModal = document.getElementById('demo-info-modal');
-    const demoInfoTrigger = document.getElementById('demo-info-trigger');
     const closeDemoModals = document.querySelectorAll('.close-demo-modal');
 
     let currentView = 'feed';
@@ -38,7 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('demoShown', 'true');
         }, 1000);
     }
-    demoInfoTrigger.onclick = () => demoInfoModal.style.display = 'block';
+    infoTriggers.forEach(btn => {
+        if(btn) btn.onclick = () => demoInfoModal.style.display = 'block';
+    });
     closeDemoModals.forEach(btn => {
         btn.onclick = () => demoInfoModal.style.display = 'none';
     });
@@ -59,12 +64,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentView === 'mypage') {
             const profileHeader = document.createElement('div');
             profileHeader.className = 'profile-header container reveal';
-            profileHeader.style.gridColumn = '1 / -1'; // Grid全体に広げる
+            profileHeader.style.gridColumn = '1 / -1';
             profileHeader.innerHTML = `
                 <div class="profile-avatar-large">ME</div>
                 <div class="profile-info">
-                    <h2>あなたの投稿一覧</h2>
-                    <p style="color:#8e8e93;">このブラウザで投稿した内容が表示されます。</p>
+                    <h2>YOUR MEMORIES</h2>
+                    <p style="color:#8e8e93;">Saved locally on this device.</p>
                 </div>
             `;
             contentGrid.appendChild(profileHeader);
@@ -74,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gridContainer.className = 'vlog-grid container';
         gridContainer.style.gridColumn = '1 / -1';
         contentGrid.appendChild(gridContainer);
-        gridContainer.innerHTML = '<p style="text-align:center; padding:2rem; color:#8e8e93;">読み込み中...</p>';
+        gridContainer.innerHTML = '<p style="text-align:center; padding:2rem; color:#8e8e93;">Loading...</p>';
 
         try {
             const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
@@ -96,10 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         gridContainer.innerHTML = '';
-        if (displayPosts.length === 0) {
-            gridContainer.innerHTML = `<p style="text-align:center; padding:5rem; color:#8e8e93;">${currentView === 'mypage' ? 'まだ自分の投稿がありません。' : '投稿がありません。'}</p>`;
-        }
-
         displayPosts.forEach(item => {
             const card = document.createElement('div');
             card.className = 'vlog-card reveal';
@@ -114,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="card-thumbnail">
                     <img src="${item.thumbnail}" alt="${item.title}">
                     <div class="card-overlay-info">
-                        <span class="location-tag">📍 ${item.location}</span>
+                        <span class="location-tag">${item.location}</span>
                     </div>
                 </div>
                 <div class="card-content">
@@ -127,49 +128,32 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(initRevealAnimations, 100);
     }
 
-    // --- Post Submission ---
-    document.getElementById('submit-post-btn').onclick = async () => {
-        const userName = document.getElementById('post-user-name').value || "ゲスト";
-        const title = document.getElementById('post-title').value;
-        const location = document.getElementById('post-location').value;
-        const thumbnail = document.getElementById('post-thumbnail').value;
-        const description = document.getElementById('post-description').value;
+    // --- Mood Pulse Logic ---
+    function initMoodPulse(timeline) {
+        pulseGraphBody.innerHTML = '';
+        if (!timeline || timeline.length === 0) return;
 
-        if (!title || !location || !thumbnail) {
-            alert("タイトル、場所、画像URLは必須です。");
-            return;
-        }
-
-        const newPost = {
-            userName: userName,
-            title: title,
-            location: location,
-            thumbnail: thumbnail,
-            description: description,
-            date: new Date().toLocaleDateString(),
-            createdAt: new Date(),
-            timeline: [{
-                time: "NOW",
-                location: location,
-                event: "Memory",
-                mood: "ワクワク",
-                text: description,
-                image: thumbnail
-            }]
+        // Mood values mapping
+        const moodMap = {
+            "ワクワク": 100, "感動": 90, "しあわせ": 85, "おいしい": 80,
+            "のんびり": 60, "リラックス": 55, "おつかれ": 30
         };
 
-        try {
-            const docRef = await addDoc(collection(db, "posts"), newPost);
-            myPostIds.push(docRef.id);
-            localStorage.setItem('myPostIds', JSON.stringify(myPostIds));
-            postModal.style.display = 'none';
-            alert("投稿しました！");
-            renderContent();
-        } catch (e) {
-            console.error("Error adding document: ", e);
-            alert("投稿に失敗しました。Firebaseの設定を確認してください。");
-        }
-    };
+        timeline.forEach(item => {
+            const height = moodMap[item.mood] || 50;
+            const color = height > 70 ? '#ff8a65' : '#444';
+            const bar = document.createElement('div');
+            bar.className = 'pulse-bar';
+            bar.style.height = '0%';
+            bar.style.background = color;
+            pulseGraphBody.appendChild(bar);
+            
+            // Animation trigger
+            setTimeout(() => {
+                bar.style.height = `${height}%`;
+            }, 300);
+        });
+    }
 
     // --- Journey Map Logic ---
     function initMap(timeline) {
@@ -198,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modalTitle.textContent = trip.title;
         setTimeout(() => {
             initMap(trip.timeline || []);
-            // PCで見やすくなるように地図の表示をリフレッシュ
+            initMoodPulse(trip.timeline || []);
             if (map) map.invalidateSize();
         }, 300);
 
@@ -230,16 +214,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Event Listeners ---
     navItems.forEach(item => {
         item.addEventListener('click', () => {
-            navItems.forEach(i => i.classList.remove('active'));
-            item.classList.add('active');
+            // Update all nav items (PC & Mobile)
+            navItems.forEach(i => {
+                if(i.getAttribute('data-view') === item.getAttribute('data-view')) {
+                    i.classList.add('active');
+                } else {
+                    i.classList.remove('active');
+                }
+            });
             currentView = item.getAttribute('data-view');
             renderContent();
         });
     });
 
-    postTrigger.onclick = () => {
-        postModal.style.display = 'block';
-    };
+    postTriggers.forEach(btn => {
+        if(btn) btn.onclick = () => postModal.style.display = 'block';
+    });
 
     [closePostModal, closeModal].forEach(btn => {
         if(btn) btn.onclick = () => {

@@ -18,16 +18,25 @@
             <div class="logo">
                 <div class="logo-mark"></div>
                 <div class="logo-text">VLOG<span>!</span></div>
-                <small class="demo-badge">DEMO</small>
             </div>
-            <nav class="top-nav">
+            <!-- PC用ナビゲーション -->
+            <nav class="top-nav pc-only">
                 <button class="nav-item active" data-view="feed">HOME</button>
                 <button class="nav-item" data-view="mypage">ME</button>
                 <button id="post-trigger" class="btn btn-primary">POST</button>
                 <button id="demo-info-trigger" class="btn-text">INFO</button>
             </nav>
+            <!-- スマホ用インフォボタンのみヘッダーに配置 -->
+            <button id="mobile-info-trigger" class="btn-text mobile-only">INFO</button>
         </div>
     </header>
+
+    <!-- スマホ用下部ナビゲーション -->
+    <nav class="bottom-nav mobile-only">
+        <button class="nav-item active" data-view="feed">HOME</button>
+        <button id="mobile-post-trigger" class="btn btn-primary">POST</button>
+        <button class="nav-item" data-view="mypage">ME</button>
+    </nav>
 
     <!-- デモ案内モーダル -->
     <div id="demo-info-modal" class="modal">
@@ -98,6 +107,12 @@
             <!-- Journey Map Area -->
             <div id="journey-map" class="journey-map-container"></div>
             
+            <!-- Mood Pulse Area -->
+            <div id="mood-pulse" class="mood-pulse-container">
+                <div class="pulse-label">MOOD FLOW</div>
+                <div id="pulse-graph" class="pulse-graph-body"></div>
+            </div>
+
             <div class="video-container" style="display:none;">
                 <iframe id="modal-iframe" src="" frameborder="0" allowfullscreen></iframe>
             </div>
