@@ -8,6 +8,9 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+// Leaflet Map Instance
+let map = null;
+
 document.addEventListener('DOMContentLoaded', () => {
     // UI Elements
     const contentGrid = document.getElementById('content-grid');
@@ -25,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeModal = document.querySelector('.close-modal');
     const modalTitle = document.getElementById('modal-title');
     const modalDescription = document.getElementById('modal-description');
+    const journeyMapContainer = document.getElementById('journey-map');
 
     let currentView = 'feed';
     let currentUser = null;
@@ -52,7 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
         let posts = [];
         let localSamples = [];
 
-        // Fetch Local Samples (Always visible in feed)
         try {
             const res = await fetch('data/trips.json');
             localSamples = await res.json();
@@ -64,7 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             
-            // プロフィールヘッダーを表示
             const profileHeader = document.createElement('div');
             profileHeader.className = 'profile-header container reveal';
             const userName = currentUser.email.split('@')[0];
@@ -94,16 +96,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     const querySnapshot = await getDocs(q);
                     querySnapshot.forEach((doc) => posts.push({id: doc.id, ...doc.data()}));
                 } catch (e) {
-                    console.warn("Firestore access failed, falling back to local samples.");
+                    console.warn("Firestore access failed.");
                 }
-                // Merge with local samples (Always shown in feed)
                 posts = [...posts, ...localSamples];
             } else if (currentView === 'mypage') {
                 const q = query(collection(db, "posts"), where("userId", "==", currentUser.uid), orderBy("createdAt", "desc"));
                 const querySnapshot = await getDocs(q);
                 querySnapshot.forEach((doc) => posts.push({id: doc.id, ...doc.data()}));
-                
-                // 投稿数を更新
                 const postCountEl = document.getElementById('post-count');
                 if (postCountEl) postCountEl.textContent = posts.length;
             }
@@ -112,10 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         gridContainer.innerHTML = '';
-        if (posts.length === 0) {
-            gridContainer.innerHTML = '<p style="text-align:center; padding:5rem; color:#8e8e93;">まだ投稿がありません。</p>';
-        }
-
         posts.forEach(item => {
             const card = document.createElement('div');
             card.className = 'vlog-card reveal';
@@ -143,48 +138,57 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(initRevealAnimations, 100);
     }
 
-    // --- Post Submission ---
-    document.getElementById('submit-post-btn').onclick = async () => {
-        if (!currentUser) { alert("ログインが必要です"); return; }
-        
-        const newPost = {
-            userId: currentUser.uid,
-            userName: currentUser.email.split('@')[0],
-            title: document.getElementById('post-title').value,
-            location: document.getElementById('post-location').value,
-            thumbnail: document.getElementById('post-thumbnail').value,
-            description: document.getElementById('post-description').value,
-            date: new Date().toLocaleDateString(),
-            createdAt: new Date(),
-            timeline: [{
-                time: "12:00",
-                event: "New Post",
-                mood: "ワクワク",
-                text: document.getElementById('post-description').value,
-                image: document.getElementById('post-thumbnail').value
-            }]
-        };
-
-        try {
-            await addDoc(collection(db, "posts"), newPost);
-            postModal.style.display = 'none';
-            alert("投稿しました！");
-            renderContent();
-        } catch (e) {
-            console.error("Error adding document: ", e);
-            alert("投稿に失敗しました。Firebaseの設定を確認してください。");
+    // --- Journey Map Logic ---
+    function initMap(timeline) {
+        // Reset map if exists
+        if (map) {
+            map.remove();
         }
-    };
+
+        const validCoords = timeline.filter(item => item.coords).map(item => item.coords);
+        
+        if (validCoords.length === 0) {
+            journeyMapContainer.style.display = 'none';
+            return;
+        }
+
+        journeyMapContainer.style.display = 'block';
+        
+        // Use the first coordinate as center
+        map = L.map('journey-map', {
+            zoomControl: false,
+            attributionControl: false
+        }).setView(validCoords[0], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        // Add Markers and draw line
+        const latlngs = [];
+        validCoords.forEach((coord, index) => {
+            L.marker(coord).addTo(map)
+                .bindPopup(`<b>${timeline[index].location}</b><br>${timeline[index].time}`);
+            latlngs.push(coord);
+        });
+
+        if (latlngs.length > 1) {
+            L.polyline(latlngs, {color: '#ffffff', weight: 3, dashArray: '5, 10'}).addTo(map);
+            map.fitBounds(L.polyline(latlngs).getBounds(), {padding: [30, 30]});
+        }
+    }
 
     // --- Modal Logic ---
     function openTripModal(trip) {
         modalTitle.textContent = trip.title;
+        
+        // Init Map
+        setTimeout(() => initMap(trip.timeline || []), 100);
+
         let timelineHtml = `<div class="timeline-container">`;
         if (trip.timeline && trip.timeline.length > 0) {
             trip.timeline.forEach(item => {
                 timelineHtml += `
                     <div class="timeline-item reveal">
-                        <span class="timeline-time-label">${item.time}</span>
+                        <span class="timeline-time-label">${item.time} @ ${item.location}</span>
                         <div class="timeline-card">
                             ${item.image ? `<img src="${item.image}" class="timeline-image">` : ''}
                             <div class="timeline-detail">
@@ -196,8 +200,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 `;
             });
-        } else {
-            timelineHtml += `<p style="padding:2rem; color:#8e8e93;">タイムラインの詳細はまだありません。</p>`;
         }
         timelineHtml += `</div>`;
         modalDescription.innerHTML = timelineHtml;
@@ -210,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
     navItems.forEach(item => {
         item.addEventListener('click', () => {
             if (item.id === 'post-trigger') {
-                if (!currentUser) { alert("ログインしてね！"); authModal.style.display = 'block'; }
+                if (!currentUser) { authModal.style.display = 'block'; }
                 else { postModal.style.display = 'block'; }
                 return;
             }
@@ -221,26 +223,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    tabBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            tabBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentView = btn.getAttribute('data-tab');
-            renderContent();
-        });
+    closeModal.addEventListener('click', () => {
+        videoModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
     });
 
-    // Close modals
-    [closeAuthModal, closePostModal, closeModal].forEach(btn => {
+    // Close other modals and auth form toggles (same as before)
+    [closeAuthModal, closePostModal].forEach(btn => {
         if(btn) btn.onclick = () => {
             authModal.style.display = 'none';
             postModal.style.display = 'none';
-            videoModal.style.display = 'none';
             document.body.style.overflow = 'auto';
         };
     });
 
-    // Auth Form Toggle
     document.getElementById('to-signup').onclick = (e) => {
         e.preventDefault();
         document.getElementById('login-form').style.display = 'none';
@@ -250,18 +246,6 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         document.getElementById('login-form').style.display = 'block';
         document.getElementById('signup-form').style.display = 'none';
-    };
-
-    // Login/Signup Actions
-    document.getElementById('login-btn').onclick = () => {
-        const email = document.getElementById('login-email').value;
-        const pass = document.getElementById('login-password').value;
-        signInWithEmailAndPassword(auth, email, pass).then(() => authModal.style.display = 'none').catch(e => alert(e.message));
-    };
-    document.getElementById('signup-btn').onclick = () => {
-        const email = document.getElementById('signup-email').value;
-        const pass = document.getElementById('signup-password').value;
-        createUserWithEmailAndPassword(auth, email, pass).then(() => authModal.style.display = 'none').catch(e => alert(e.message));
     };
 
     function initRevealAnimations() {

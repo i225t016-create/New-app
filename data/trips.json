@@ -11,6 +11,7 @@
       {
         "time": "19:30",
         "location": "スクランブル交差点",
+        "coords": [35.6595, 139.7005],
         "event": "Walking",
         "mood": "ワクワク",
         "text": "信号が変わった瞬間の熱気が好き。",
@@ -30,6 +31,7 @@
       {
         "time": "21:00",
         "location": "中洲屋台",
+        "coords": [33.5932, 130.4040],
         "event": "Dinner",
         "mood": "しあわせ",
         "text": "替え玉までしちゃった。後悔はない。",
@@ -48,7 +50,8 @@
     "timeline": [
       {
         "time": "14:00",
-        "location": "ビーチサイド",
+        "location": "万座毛",
+        "coords": [26.5052, 127.8505],
         "event": "Relaxing",
         "mood": "のんびり",
         "text": "この青さをずっと眺めていたい。",
@@ -68,6 +71,7 @@
       {
         "time": "08:00",
         "location": "美瑛の丘",
+        "coords": [43.5912, 142.4644],
         "event": "Shooting",
         "mood": "ワクワク",
         "text": "凛とした空気感がたまらない。",
@@ -76,78 +80,40 @@
     ]
   },
   {
-    "id": "sample5",
-    "userName": "Hina",
-    "title": "大阪・道頓堀の看板に圧倒！",
-    "date": "2024.05.14",
-    "location": "大阪 / 道頓堀",
-    "thumbnail": "https://images.unsplash.com/photo-1590250005527-727918398188?auto=format&fit=crop&w=800&q=80",
-    "description": "食べる、歩く、笑う！大阪のエネルギーを全身で浴びてきました。",
+    "id": "sample10",
+    "userName": "Aoi",
+    "title": "京都・東山をめぐる旅",
+    "date": "2024.05.20",
+    "location": "京都 / 東山",
+    "thumbnail": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80",
+    "description": "清水寺から八坂神社まで。歴史を感じる街歩き。",
     "timeline": [
       {
-        "time": "19:00",
-        "location": "グリコ前",
-        "event": "Sightseeing",
-        "mood": "ワクワク",
-        "text": "やっぱりこの看板を見ると大阪に来た実感が湧く！",
-        "image": "https://images.unsplash.com/photo-1590250005527-727918398188?auto=format&fit=crop&w=800&q=80"
-      }
-    ]
-  },
-  {
-    "id": "sample6",
-    "userName": "Sora",
-    "title": "金沢、城下町の風情が素敵",
-    "date": "2024.05.13",
-    "location": "石川 / 東茶屋街",
-    "thumbnail": "https://images.unsplash.com/photo-1590272213032-4740e53a2688?auto=format&fit=crop&w=800&q=80",
-    "description": "格子戸が並ぶ美しい街並み。時が止まったような不思議な感覚。和菓子も美味しかった。",
-    "timeline": [
+        "time": "13:00",
+        "location": "清水寺",
+        "coords": [34.9949, 135.7850],
+        "event": "Visit",
+        "mood": "感動",
+        "text": "舞台からの景色は圧巻。修学旅行以来だけどやっぱり良い！",
+        "image": "https://images.unsplash.com/photo-1542931287-023b922fa89b?auto=format&fit=crop&w=800&q=80"
+      },
       {
-        "time": "11:00",
-        "location": "東茶屋街",
-        "event": "Strolling",
-        "mood": "のんびり",
-        "text": "着物で歩いている人も多くて、とても絵になる場所でした。",
-        "image": "https://images.unsplash.com/photo-1590272213032-4740e53a2688?auto=format&fit=crop&w=800&q=80"
-      }
-    ]
-  },
-  {
-    "id": "sample7",
-    "userName": "Rina",
-    "title": "奈良公園で鹿とたわむれる",
-    "date": "2024.05.12",
-    "location": "奈良 / 奈良公園",
-    "thumbnail": "https://images.unsplash.com/photo-1552554668-525d57ca7851?auto=format&fit=crop&w=800&q=80",
-    "description": "鹿せんべいを持った瞬間の囲まれ具合にびっくり！でもみんな可愛かったです。",
-    "timeline": [
+        "time": "15:00",
+        "location": "三年坂",
+        "coords": [34.9965, 135.7818],
+        "event": "Snack",
+        "mood": "おいしい",
+        "text": "抹茶ソフトを食べながら休憩。お店がたくさんあって楽しい。",
+        "image": "https://images.unsplash.com/photo-1528363504672-a309da53f58b?auto=format&fit=crop&w=800&q=80"
+      },
       {
-        "time": "15:30",
-        "location": "大仏殿近く",
-        "event": "Deer Time",
+        "time": "17:00",
+        "location": "八坂神社",
+        "coords": [35.0037, 135.7785],
+        "event": "Goal",
         "mood": "しあわせ",
-        "text": "丁寧にお辞儀してくれる鹿さんもいて癒やされた〜。",
-        "image": "https://images.unsplash.com/photo-1552554668-525d57ca7851?auto=format&fit=crop&w=800&q=80"
-      }
-    ]
-  },
-  {
-    "id": "sample8",
-    "userName": "Gaito",
-    "title": "横浜、みなとみらいの夜景",
-    "date": "2024.05.11",
-    "location": "神奈川 / 桜木町",
-    "thumbnail": "https://images.unsplash.com/photo-1579626602330-94f30c1737e3?auto=format&fit=crop&w=800&q=80",
-    "description": "仕事帰りにふらっと。海風に当たりながら眺める未来的な景色は何度見ても飽きない。",
-    "timeline": [
-      {
-        "time": "20:00",
-        "location": "万国橋",
-        "event": "Walking",
-        "mood": "のんびり",
-        "text": "水面に映るコスモワールドの観覧車が幻想的。",
-        "image": "https://images.unsplash.com/photo-1579626602330-94f30c1737e3?auto=format&fit=crop&w=800&q=80"
+        "text": "朱色の西楼門が夕日に映えてきれいでした。",
+        "image": "https://images.unsplash.com/photo-1598894591131-8b1097ba5823?auto=format&fit=crop&w=800&q=80"
       }
     ]
   }
