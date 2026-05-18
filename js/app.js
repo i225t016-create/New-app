@@ -17,6 +17,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const postModal = document.getElementById('post-modal');
     const closePostModal = document.querySelector('.close-post-modal');
     
+    // Success Modal
+    const successModal = document.getElementById('success-modal');
+    const closeSuccessBtn = document.querySelector('.close-success-btn');
+
+    // Image Upload Elements
+    const imageDropZone = document.getElementById('image-drop-zone');
+    const fileInput = document.getElementById('post-file-input');
+    const imagePreview = document.getElementById('image-preview');
+    const uploadPlaceholder = document.querySelector('.upload-placeholder');
+    let selectedImageData = null;
+
     const videoModal = document.getElementById('video-modal');
     const closeModal = document.querySelector('.close-modal');
     const modalTitle = document.getElementById('modal-title');
@@ -97,18 +108,71 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <div class="card-content"><p>${item.title}</p></div>
             `;
-            
-            // アバタークリックでプロフィール表示
-            card.querySelector('.user-avatar').addEventListener('click', (e) => {
-                e.stopPropagation();
-                openUserProfile(item.userName);
-            });
-            
+            card.querySelector('.user-avatar').addEventListener('click', (e) => { e.stopPropagation(); openUserProfile(item.userName); });
             card.addEventListener('click', () => openTripModal(item));
             grid.appendChild(card);
         });
         setTimeout(initRevealAnimations, 100);
     }
+
+    // --- Image Upload Handling ---
+    imageDropZone.onclick = () => fileInput.click();
+    fileInput.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                selectedImageData = event.target.result;
+                imagePreview.src = selectedImageData;
+                imagePreview.style.display = 'block';
+                uploadPlaceholder.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    // --- Post Submission ---
+    document.getElementById('submit-post-btn').onclick = async () => {
+        const name = document.getElementById('post-user-name').value;
+        const title = document.getElementById('post-title').value;
+        const loc = document.getElementById('post-location').value;
+        const desc = document.getElementById('post-description').value;
+
+        if (!title || !loc || !selectedImageData) { alert("写真、タイトル、場所を入力してください"); return; }
+
+        const newPost = {
+            userName: name || "Guest", title, location: loc, thumbnail: selectedImageData, description: desc,
+            date: new Date().toLocaleDateString(), createdAt: new Date(),
+            timeline: [{ time: "NOW", location: loc, event: "Memory", mood: "ワクワク", text: desc, image: selectedImageData }]
+        };
+
+        try {
+            const docRef = await addDoc(collection(db, "posts"), newPost);
+            myPostIds.push(docRef.id);
+            localStorage.setItem('myPostIds', JSON.stringify(myPostIds));
+            
+            // UI Reset
+            postModal.style.display = 'none';
+            resetPostForm();
+            
+            // Show Success Animation
+            successModal.style.display = 'block';
+            renderContent();
+        } catch (e) { alert("投稿に失敗しました。"); }
+    };
+
+    function resetPostForm() {
+        document.getElementById('post-user-name').value = '';
+        document.getElementById('post-title').value = '';
+        document.getElementById('post-location').value = '';
+        document.getElementById('post-description').value = '';
+        selectedImageData = null;
+        imagePreview.style.display = 'none';
+        uploadPlaceholder.style.display = 'flex';
+        fileInput.value = '';
+    }
+
+    closeSuccessBtn.onclick = () => { successModal.style.display = 'none'; };
 
     // --- User Profile Logic ---
     function openUserProfile(userName) {
@@ -132,31 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = 'hidden';
     }
 
-    // --- Post Logic ---
-    document.getElementById('submit-post-btn').onclick = async () => {
-        const name = document.getElementById('post-user-name').value;
-        const title = document.getElementById('post-title').value;
-        const loc = document.getElementById('post-location').value;
-        const thumb = document.getElementById('post-thumbnail').value;
-        const desc = document.getElementById('post-description').value;
-
-        if (!title || !loc || !thumb) { alert("必要な項目を入力してください"); return; }
-
-        const newPost = { userName: name || "Guest", title, location: loc, thumbnail: thumb, description: desc, date: new Date().toLocaleDateString(), createdAt: new Date(),
-            timeline: [{ time: "NOW", location: loc, event: "Memory", mood: "ワクワク", text: desc, image: thumb }]
-        };
-
-        try {
-            const docRef = await addDoc(collection(db, "posts"), newPost);
-            myPostIds.push(docRef.id);
-            localStorage.setItem('myPostIds', JSON.stringify(myPostIds));
-            postModal.style.display = 'none';
-            alert("公開しました！");
-            renderContent();
-        } catch (e) { alert("エラーが発生しました。"); }
-    };
-
-    // --- Map & Mood Logic ---
+    // --- Journey Map & Mood Pulse Logic (Same as before) ---
     function initMap(timeline) {
         if (map) map.remove();
         const coords = timeline.filter(i => i.coords).map(i => i.coords);

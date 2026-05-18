@@ -66,37 +66,59 @@
         </div>
     </main>
 
-    <!-- 投稿モーダル -->
+    <!-- 投稿モーダル（刷新版：シンプル＆高機能） -->
     <div id="post-modal" class="modal">
         <div class="modal-content post-form-content">
-            <span class="close-post-modal">&times;</span>
-            <h2 style="margin-bottom: 0.5rem;">Create New Log</h2>
-            <p style="color: #8e8e93; font-size: 0.8rem; margin-bottom: 2rem;">新しい思い出を世界に共有しましょう</p>
-            
-            <div class="post-form">
-                <div class="input-group">
-                    <label>NAME</label>
-                    <input type="text" id="post-user-name" placeholder="お名前">
-                </div>
-                <div class="input-group">
-                    <label>TITLE</label>
-                    <input type="text" id="post-title" placeholder="タイトルの入力 (例: 春の京都旅)">
-                </div>
-                <div class="input-group">
-                    <label>LOCATION</label>
-                    <input type="text" id="post-location" placeholder="場所の入力 (例: 京都 / 嵐山)">
-                </div>
-                <div class="input-group">
-                    <label>IMAGE URL</label>
-                    <input type="text" id="post-thumbnail" placeholder="画像URLを貼り付け">
-                </div>
-                <div class="input-group">
-                    <label>STORY</label>
-                    <textarea id="post-description" placeholder="この旅行の思い出を自由に書いてください"></textarea>
-                </div>
-                
-                <button id="submit-post-btn" class="btn-primary" style="width: 100%; margin-top: 1rem;">PUBLISH POST</button>
+            <div class="modal-header">
+                <h2>NEW POST</h2>
+                <span class="close-post-modal">&times;</span>
             </div>
+            
+            <div class="post-form-scroll">
+                <!-- 画像選択エリア -->
+                <div class="image-upload-area" id="image-drop-zone">
+                    <input type="file" id="post-file-input" accept="image/*" hidden>
+                    <div id="image-preview-container" class="preview-container">
+                        <div class="upload-placeholder">
+                            <span class="upload-icon">📷</span>
+                            <p>TAP TO SELECT PHOTO</p>
+                            <small>またはここにドラッグ＆ドロップ</small>
+                        </div>
+                        <img id="image-preview" src="" style="display:none;">
+                    </div>
+                </div>
+
+                <div class="input-block">
+                    <input type="text" id="post-user-name" placeholder="YOUR NAME (お名前)">
+                </div>
+                <div class="input-block">
+                    <input type="text" id="post-title" placeholder="TITLE (思い出のタイトル)">
+                </div>
+                <div class="input-block">
+                    <input type="text" id="post-location" placeholder="LOCATION (場所の入力)">
+                </div>
+                <div class="input-block">
+                    <textarea id="post-description" placeholder="SHARE YOUR STORY... (思い出を自由に書いてください)"></textarea>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button id="submit-post-btn" class="btn-primary share-btn">SHARE POST</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 投稿成功モーダル -->
+    <div id="success-modal" class="modal">
+        <div class="modal-content success-content">
+            <div class="success-animation">
+                <div class="checkmark-circle">
+                    <div class="checkmark draw"></div>
+                </div>
+            </div>
+            <h2>POST SHARED!</h2>
+            <p>あなたの思い出が共有されました</p>
+            <button class="btn-primary close-success-btn">GREAT</button>
         </div>
     </div>
 

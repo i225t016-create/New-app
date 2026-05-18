@@ -309,34 +309,169 @@ body {
 
 .close-modal { position: absolute; top: 1rem; right: 1.5rem; font-size: 2rem; color: #fff; cursor: pointer; z-index: 2100; }
 
-/* Form Enhancements - Japenese Friendly */
-.input-group {
-    margin-bottom: 1.5rem;
-    text-align: left;
+/* Simple Post UI - Advanced */
+.post-form-content {
+    max-width: 500px;
+    padding: 0;
+    overflow: hidden;
 }
 
-.input-group label {
-    display: block;
-    font-size: 0.65rem;
+.modal-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #2c2c2e;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    font-size: 1rem;
+    letter-spacing: 2px;
     font-weight: 900;
-    letter-spacing: 1px;
-    color: var(--accent-color);
-    margin-bottom: 0.5rem;
 }
 
-.input-group input, .input-group textarea {
-    margin-bottom: 0;
-    border: 1px solid #2c2c2e;
+.post-form-scroll {
+    padding: 2rem;
+    max-height: 60vh;
+    overflow-y: auto;
 }
 
-.input-group input::placeholder, .input-group textarea::placeholder {
+.image-upload-area {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #0a0a0b;
+    border: 2px dashed #2c2c2e;
+    border-radius: 20px;
+    margin-bottom: 2rem;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.image-upload-area:hover {
+    border-color: var(--accent-color);
+    background: #1c1c1e;
+}
+
+.preview-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.upload-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.upload-placeholder p {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #fff;
+}
+
+.upload-placeholder small {
+    font-size: 0.65rem;
     color: #444;
-    font-size: 0.85rem;
 }
 
-/* User Profile Modal Extra */
-#profile-detail-container {
-    padding-bottom: 2rem;
+#image-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.input-block {
+    margin-bottom: 1.2rem;
+}
+
+.input-block input, .input-block textarea {
+    background: #0a0a0b;
+    border: 1px solid #1c1c1e;
+    border-radius: 12px;
+    padding: 1.2rem;
+    font-size: 0.95rem;
+}
+
+.input-block input:focus, .input-block textarea:focus {
+    border-color: #333;
+    background: #111;
+}
+
+.modal-footer {
+    padding: 1.5rem 2rem;
+    border-top: 1px solid #1c1c1e;
+}
+
+.share-btn {
+    width: 100%;
+    padding: 1.2rem;
+    border-radius: 15px;
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+
+/* Success Modal Styles */
+.success-content {
+    max-width: 400px;
+    text-align: center;
+    padding: 4rem 2rem;
+    border-radius: 40px;
+}
+
+.success-animation {
+    margin-bottom: 2rem;
+}
+
+.checkmark-circle {
+    width: 80px;
+    height: 80px;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    border: 4px solid var(--accent-color);
+    border-radius: 50%;
+}
+
+.checkmark {
+    position: absolute;
+    top: 40px;
+    left: 18px;
+    width: 20px;
+    height: 40px;
+    border-right: 4px solid var(--accent-color);
+    border-top: 4px solid var(--accent-color);
+    transform-origin: left top;
+    transform: scaleX(-1) rotate(135deg);
+}
+
+.draw:after {
+    animation: checkmark 0.8s ease;
+}
+
+@keyframes checkmark {
+    0% { height: 0; width: 0; }
+    20% { height: 0; width: 20px; }
+    40% { height: 40px; width: 20px; }
+}
+
+/* Animation Override */
+.modal-content {
+    animation: slideUp 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+@keyframes slideUp {
+    from { transform: translateY(100px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
 /* UI Refinements - General */
