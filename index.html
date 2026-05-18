@@ -16,27 +16,18 @@
     <header class="main-header">
         <div class="container header-flex">
             <div class="logo">
-                <div class="logo-mark"></div>
                 <div class="logo-text">VLOG<span>!</span></div>
             </div>
-            <!-- PC用ナビゲーション -->
-            <nav class="top-nav pc-only">
+            
+            <!-- ナビゲーション（PC/スマホ共通の横並びデザインへ） -->
+            <nav class="main-nav">
                 <button class="nav-item active" data-view="feed">HOME</button>
                 <button class="nav-item" data-view="mypage">ME</button>
-                <button id="post-trigger" class="btn btn-primary">POST</button>
-                <button id="demo-info-trigger" class="btn-text">INFO</button>
+                <button id="post-trigger" class="nav-item post-btn">POST</button>
+                <button id="demo-info-trigger" class="nav-item info-btn">INFO</button>
             </nav>
-            <!-- スマホ用インフォボタンのみヘッダーに配置 -->
-            <button id="mobile-info-trigger" class="btn-text mobile-only">INFO</button>
         </div>
     </header>
-
-    <!-- スマホ用下部ナビゲーション -->
-    <nav class="bottom-nav mobile-only">
-        <button class="nav-item active" data-view="feed">HOME</button>
-        <button id="mobile-post-trigger" class="btn btn-primary">POST</button>
-        <button class="nav-item" data-view="mypage">ME</button>
-    </nav>
 
     <!-- デモ案内モーダル -->
     <div id="demo-info-modal" class="modal">
