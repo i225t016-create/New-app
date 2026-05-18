@@ -309,28 +309,50 @@ body {
 
 .close-modal { position: absolute; top: 1rem; right: 1.5rem; font-size: 2rem; color: #fff; cursor: pointer; z-index: 2100; }
 
-/* Form Styles */
-.auth-form-content, .post-form-content {
-    max-width: 440px;
-    margin: 4rem auto;
-    padding: 3rem;
-    background: #000;
-    border: 1px solid #333;
-    border-radius: 30px;
+/* Form Enhancements - Japenese Friendly */
+.input-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
 }
 
-input, textarea {
-    width: 100%;
-    padding: 1.2rem;
-    margin-bottom: 1rem;
-    background: #1c1c1e;
-    border: 1px solid transparent;
-    border-radius: 15px;
-    color: white;
-    font-family: inherit;
+.input-group label {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
 }
 
-input:focus { outline: none; border-color: var(--accent-color); }
+.input-group input, .input-group textarea {
+    margin-bottom: 0;
+    border: 1px solid #2c2c2e;
+}
+
+.input-group input::placeholder, .input-group textarea::placeholder {
+    color: #444;
+    font-size: 0.85rem;
+}
+
+/* User Profile Modal Extra */
+#profile-detail-container {
+    padding-bottom: 2rem;
+}
+
+/* UI Refinements - General */
+.vlog-card {
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.user-avatar {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.user-avatar:hover {
+    transform: scale(1.1);
+    border: 1px solid var(--accent-color);
+}
 
 /* Animation */
 .reveal { opacity: 0; transform: translateY(10px); transition: all 0.4s ease; }

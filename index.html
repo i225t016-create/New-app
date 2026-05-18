@@ -70,23 +70,42 @@
     <div id="post-modal" class="modal">
         <div class="modal-content post-form-content">
             <span class="close-post-modal">&times;</span>
-            <h2>新しい思い出を投稿</h2>
+            <h2 style="margin-bottom: 0.5rem;">Create New Log</h2>
+            <p style="color: #8e8e93; font-size: 0.8rem; margin-bottom: 2rem;">新しい思い出を世界に共有しましょう</p>
+            
             <div class="post-form">
-                <input type="text" id="post-user-name" placeholder="あなたのお名前">
-                <input type="text" id="post-title" placeholder="タイトル (例: 春の京都旅)">
-                <input type="text" id="post-location" placeholder="場所 (例: 京都 / 嵐山)">
-                <input type="text" id="post-thumbnail" placeholder="画像URL (Unsplashなど)">
-                <textarea id="post-description" placeholder="この旅行の感想を一言"></textarea>
-                
-                <div class="timeline-input-area">
-                    <h3>タイムライン (1件目)</h3>
-                    <input type="text" id="tl-time-1" placeholder="時間 (例: 10:00)">
-                    <input type="text" id="tl-event-1" placeholder="できごと (例: 到着！)">
-                    <input type="text" id="tl-mood-1" placeholder="気分 (例: ワクワク)">
-                    <textarea id="tl-text-1" placeholder="詳細な思い出"></textarea>
+                <div class="input-group">
+                    <label>NAME</label>
+                    <input type="text" id="post-user-name" placeholder="お名前">
+                </div>
+                <div class="input-group">
+                    <label>TITLE</label>
+                    <input type="text" id="post-title" placeholder="タイトルの入力 (例: 春の京都旅)">
+                </div>
+                <div class="input-group">
+                    <label>LOCATION</label>
+                    <input type="text" id="post-location" placeholder="場所の入力 (例: 京都 / 嵐山)">
+                </div>
+                <div class="input-group">
+                    <label>IMAGE URL</label>
+                    <input type="text" id="post-thumbnail" placeholder="画像URLを貼り付け">
+                </div>
+                <div class="input-group">
+                    <label>STORY</label>
+                    <textarea id="post-description" placeholder="この旅行の思い出を自由に書いてください"></textarea>
                 </div>
                 
-                <button id="submit-post-btn" class="btn btn-primary">投稿を公開する</button>
+                <button id="submit-post-btn" class="btn-primary" style="width: 100%; margin-top: 1rem;">PUBLISH POST</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ユーザープロフィール表示モーダル -->
+    <div id="user-profile-modal" class="modal">
+        <div class="modal-content detail-modal-content">
+            <span class="close-user-modal" style="position:absolute; top:1rem; right:1.5rem; cursor:pointer; font-size:2rem; color:#fff; z-index:100;">&times;</span>
+            <div id="profile-detail-container">
+                <!-- JavaScriptでプロフィール内容が入ります -->
             </div>
         </div>
     </div>
