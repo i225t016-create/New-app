@@ -16,9 +16,12 @@
     <header class="main-header">
         <div class="container header-flex">
             <div class="logo">🎥 ぶい<span>ログ！</span> <small style="font-size: 0.6rem; background: #333; padding: 2px 6px; border-radius: 4px; vertical-align: middle;">DEMO</small></div>
-            <div id="auth-status" class="auth-status">
+            <nav class="top-nav">
+                <button class="nav-item active" data-view="feed">🏠 ホーム</button>
+                <button class="nav-item" data-view="mypage">👤 自分の投稿</button>
+                <button id="post-trigger" class="btn btn-primary" style="margin: 0 1rem; padding: 0.5rem 1.5rem;">➕ 投稿する</button>
                 <button id="demo-info-trigger" class="btn-text" style="font-size: 1.2rem;">ℹ️</button>
-            </div>
+            </nav>
         </div>
     </header>
 
@@ -50,25 +53,14 @@
 
     <main>
         <!-- メインコンテンツ領域（フィード・マイページ） -->
-        <div id="content-container">
+        <div id="content-container" style="padding-top: 2rem;">
             <div class="container">
-                <div class="tab-controls reveal">
-                    <button class="tab-btn active" data-tab="feed">みんなの投稿</button>
-                    <button class="tab-btn" data-tab="mypage">自分の投稿</button>
-                </div>
                 <div id="content-grid" class="vlog-grid reveal">
                     <!-- JavaScriptで投稿カードが入ります -->
                 </div>
             </div>
         </div>
     </main>
-
-    <!-- 下部ナビゲーション（SNS風） -->
-    <nav class="bottom-nav">
-        <button class="nav-item active" data-view="feed">🏠<span>ホーム</span></button>
-        <button class="nav-item" id="post-trigger">➕<span>投稿</span></button>
-        <button class="nav-item" data-view="mypage">👤<span>自分の投稿</span></button>
-    </nav>
 
     <!-- 投稿モーダル -->
     <div id="post-modal" class="modal">

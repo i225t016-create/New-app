@@ -12,7 +12,6 @@ let map = null;
 document.addEventListener('DOMContentLoaded', () => {
     // UI Elements
     const contentGrid = document.getElementById('content-grid');
-    const tabBtns = document.querySelectorAll('.tab-btn');
     const navItems = document.querySelectorAll('.nav-item');
     
     const postModal = document.getElementById('post-modal');
@@ -25,22 +24,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalDescription = document.getElementById('modal-description');
     const journeyMapContainer = document.getElementById('journey-map');
 
-    let currentView = 'feed';
-    let myPostIds = JSON.parse(localStorage.getItem('myPostIds') || '[]');
-
-    // --- Demo Info Modal Logic ---
     const demoInfoModal = document.getElementById('demo-info-modal');
     const demoInfoTrigger = document.getElementById('demo-info-trigger');
     const closeDemoModals = document.querySelectorAll('.close-demo-modal');
 
-    // 初回起動時にデモ案内を表示
+    let currentView = 'feed';
+    let myPostIds = JSON.parse(localStorage.getItem('myPostIds') || '[]');
+
+    // --- Demo Info Modal Logic ---
     if (!localStorage.getItem('demoShown')) {
         setTimeout(() => {
             demoInfoModal.style.display = 'block';
             localStorage.setItem('demoShown', 'true');
         }, 1000);
     }
-
     demoInfoTrigger.onclick = () => demoInfoModal.style.display = 'block';
     closeDemoModals.forEach(btn => {
         btn.onclick = () => demoInfoModal.style.display = 'none';
@@ -54,19 +51,32 @@ document.addEventListener('DOMContentLoaded', () => {
         let posts = [];
         let localSamples = [];
 
-        // Fetch Local Samples
         try {
             const res = await fetch('data/trips.json');
             localSamples = await res.json();
         } catch (e) { console.error("Local data load failed", e); }
 
+        if (currentView === 'mypage') {
+            const profileHeader = document.createElement('div');
+            profileHeader.className = 'profile-header container reveal';
+            profileHeader.style.gridColumn = '1 / -1'; // Grid全体に広げる
+            profileHeader.innerHTML = `
+                <div class="profile-avatar-large">ME</div>
+                <div class="profile-info">
+                    <h2>あなたの投稿一覧</h2>
+                    <p style="color:#8e8e93;">このブラウザで投稿した内容が表示されます。</p>
+                </div>
+            `;
+            contentGrid.appendChild(profileHeader);
+        }
+
         const gridContainer = document.createElement('div');
         gridContainer.className = 'vlog-grid container';
+        gridContainer.style.gridColumn = '1 / -1';
         contentGrid.appendChild(gridContainer);
         gridContainer.innerHTML = '<p style="text-align:center; padding:2rem; color:#8e8e93;">読み込み中...</p>';
 
         try {
-            // Always fetch all posts from Firestore
             const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => {
@@ -76,7 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
             console.warn("Firestore access failed.");
         }
 
-        // Merge with samples
         const allPosts = [...posts, ...localSamples];
         let displayPosts = [];
 
@@ -151,17 +160,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const docRef = await addDoc(collection(db, "posts"), newPost);
-            
-            // Save to LocalStorage to identify "my posts"
             myPostIds.push(docRef.id);
             localStorage.setItem('myPostIds', JSON.stringify(myPostIds));
-            
             postModal.style.display = 'none';
             alert("投稿しました！");
             renderContent();
         } catch (e) {
             console.error("Error adding document: ", e);
-            alert("投稿に失敗しました。Firebaseの設定（APIキーや権限）を確認してください。");
+            alert("投稿に失敗しました。Firebaseの設定を確認してください。");
         }
     };
 
@@ -178,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
         const latlngs = [];
         validCoords.forEach((coord, index) => {
-            L.marker(coord).addTo(map).bindPopup(`<b>${timeline[index].location}</b>`);
+            L.marker(coord).addTo(map);
             latlngs.push(coord);
         });
         if (latlngs.length > 1) {
@@ -190,7 +196,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Modal Logic ---
     function openTripModal(trip) {
         modalTitle.textContent = trip.title;
-        setTimeout(() => initMap(trip.timeline || []), 100);
+        setTimeout(() => {
+            initMap(trip.timeline || []);
+            // PCで見やすくなるように地図の表示をリフレッシュ
+            if (map) map.invalidateSize();
+        }, 300);
+
         let timelineHtml = `<div class="timeline-container">`;
         if (trip.timeline && trip.timeline.length > 0) {
             trip.timeline.forEach(item => {
@@ -219,10 +230,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Event Listeners ---
     navItems.forEach(item => {
         item.addEventListener('click', () => {
-            if (item.id === 'post-trigger') {
-                postModal.style.display = 'block';
-                return;
-            }
             navItems.forEach(i => i.classList.remove('active'));
             item.classList.add('active');
             currentView = item.getAttribute('data-view');
@@ -230,14 +237,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    tabBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            tabBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentView = btn.getAttribute('data-tab');
-            renderContent();
-        });
-    });
+    postTrigger.onclick = () => {
+        postModal.style.display = 'block';
+    };
 
     [closePostModal, closeModal].forEach(btn => {
         if(btn) btn.onclick = () => {

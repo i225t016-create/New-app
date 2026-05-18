@@ -1,12 +1,12 @@
 :root {
-    --bg-color: #000000; /* 黒基調でBeReal風に */
+    --bg-color: #000000;
     --card-bg: #1c1c1e;
     --text-color: #ffffff;
     --text-muted: #8e8e93;
     --accent-color: #ffffff;
-    --container-width: 600px; /* スマホライクな幅 */
-    --transition-speed: 0.2s;
-    --radius: 20px;
+    --container-width: 1200px; /* PC向けに拡張 */
+    --transition-speed: 0.3s;
+    --radius: 24px;
 }
 
 * {
@@ -26,81 +26,104 @@ body {
 .container {
     max-width: var(--container-width);
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: 0 2rem;
 }
 
-/* Header */
+/* Header & Top Nav */
 .main-header {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background: rgba(0,0,0,0.8);
+    background: rgba(0,0,0,0.85);
     backdrop-filter: blur(20px);
-    padding: 1.5rem 0;
-    text-align: center;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid #1c1c1e;
+}
+
+.header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .logo {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: 800;
     letter-spacing: -1px;
+    cursor: pointer;
 }
 
-/* Tab Controls */
-.tab-controls {
+.top-nav {
     display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin: 1rem 0;
+    align-items: center;
+    gap: 1.5rem;
 }
 
-.tab-btn {
+.nav-item {
     background: none;
     border: none;
     color: var(--text-muted);
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     cursor: pointer;
-    padding-bottom: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    transition: all var(--transition-speed);
 }
 
-.tab-btn.active {
-    color: var(--text-color);
-    border-bottom: 2px solid var(--text-color);
+.nav-item:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.1);
 }
 
-/* Content Grid */
+.nav-item.active {
+    color: #fff;
+    background: rgba(255,255,255,0.15);
+}
+
+/* Content Grid - Mosaic Layout */
 .vlog-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
     padding-bottom: 5rem;
 }
 
-/* Card Style (BeReal-ish) */
+/* Card Style - Refined for PC */
 .vlog-card {
     background: var(--card-bg);
     border-radius: var(--radius);
     overflow: hidden;
     position: relative;
+    transition: all var(--transition-speed);
+    cursor: pointer;
+    border: 1px solid #2c2c2e;
+}
+
+.vlog-card:hover {
+    transform: translateY(-8px);
+    border-color: #444;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
 }
 
 .card-header {
-    padding: 1rem;
+    padding: 0.8rem 1.2rem;
     display: flex;
     align-items: center;
     gap: 0.8rem;
+    background: rgba(0,0,0,0.2);
 }
 
 .user-avatar {
-    width: 32px;
-    height: 32px;
-    background: #333;
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(45deg, #444, #222);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
+    font-weight: 800;
 }
 
 .card-user-info h3 {
