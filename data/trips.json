@@ -1,87 +1,77 @@
 [
   {
-    "id": "t1",
-    "title": "春の京都、のんびりひとり旅",
-    "date": "2024.04.10",
-    "location": "京都 / 嵐山",
-    "thumbnail": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80",
-    "description": "桜と湯豆腐に癒やされた、最高の3日間。",
+    "id": "sample1",
+    "userName": "Yuki",
+    "title": "渋谷の交差点、やっぱりすごい！",
+    "date": "2024.05.18",
+    "location": "東京 / 渋谷",
+    "thumbnail": "https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&w=800&q=80",
+    "description": "何回きても圧倒される場所。今日は雨上がりで地面が反射してて綺麗だった！",
     "timeline": [
       {
-        "time": "10:00",
-        "location": "京都駅",
-        "event": "Arrival",
-        "mood": "ワクワク",
-        "text": "ついに到着！空気が春の匂い。",
-        "image": "https://images.unsplash.com/photo-1542931287-023b922fa89b?auto=format&fit=crop&w=800&q=80"
-      },
-      {
-        "time": "12:30",
-        "location": "嵐山 湯豆腐店",
-        "event": "Lunch",
-        "mood": "おいしい",
-        "text": "お出汁が体に染み渡る...",
-        "image": "https://images.unsplash.com/photo-1528363504672-a309da53f58b?auto=format&fit=crop&w=800&q=80"
-      },
-      {
-        "time": "15:00",
-        "location": "竹林の道",
+        "time": "19:30",
+        "location": "スクランブル交差点",
         "event": "Walking",
-        "mood": "のんびり",
-        "text": "緑のトンネル、ずっと歩いていられる。",
-        "image": "https://images.unsplash.com/photo-1598894591131-8b1097ba5823?auto=format&fit=crop&w=800&q=80"
-      }
-    ]
-  },
-  {
-    "id": "t2",
-    "title": "週末のご褒美、夜景キャンプ",
-    "date": "2024.05.12",
-    "location": "山梨 / 富士山麓",
-    "thumbnail": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=800&q=80",
-    "description": "富士山を眺めながらの、贅沢な時間。",
-    "timeline": [
-      {
-        "time": "09:00",
-        "location": "ふもとっぱら",
-        "event": "Check-in",
         "mood": "ワクワク",
-        "text": "富士山がどーんと目の前！",
-        "image": "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=800&q=80"
-      },
-      {
-        "time": "19:00",
-        "location": "テントサイト",
-        "event": "Dinner",
-        "mood": "おいしい",
-        "text": "焚き火で焼くお肉は最強。",
-        "image": "https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=800&q=80"
+        "text": "信号が変わった瞬間の熱気が好き。",
+        "image": "https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&w=800&q=80"
       }
     ]
   },
   {
-    "id": "t3",
-    "title": "蔵前カフェ巡り日記",
-    "date": "2024.05.20",
-    "location": "東京 / 蔵前",
-    "thumbnail": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80",
-    "description": "お気に入りの一杯を見つける休日。",
+    "id": "sample2",
+    "userName": "Taka",
+    "title": "福岡の屋台で最高のラーメン",
+    "date": "2024.05.17",
+    "location": "福岡 / 中洲",
+    "thumbnail": "https://images.unsplash.com/photo-1582890595293-1959f635f798?auto=format&fit=crop&w=800&q=80",
+    "description": "中洲の屋台通り。とんこつの匂いに誘われて...。店主さんも気さくで最高でした！",
     "timeline": [
       {
-        "time": "11:30",
-        "location": "Coffee Stand",
-        "event": "Morning Coffee",
-        "mood": "のんびり",
-        "text": "浅煎りのエチオピア、フルーティーで美味しい。",
-        "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80"
-      },
+        "time": "21:00",
+        "location": "中洲屋台",
+        "event": "Dinner",
+        "mood": "しあわせ",
+        "text": "替え玉までしちゃった。後悔はない。",
+        "image": "https://images.unsplash.com/photo-1582890595293-1959f635f798?auto=format&fit=crop&w=800&q=80"
+      }
+    ]
+  },
+  {
+    "id": "sample3",
+    "userName": "Miku",
+    "title": "沖縄、海が透き通ってる！",
+    "date": "2024.05.16",
+    "location": "沖縄 / 万座毛",
+    "thumbnail": "https://images.unsplash.com/photo-1538935339241-8d9ef73fc56d?auto=format&fit=crop&w=800&q=80",
+    "description": "久しぶりの休日。波の音を聴きながら何もしない贅沢。心の洗濯ができました。",
+    "timeline": [
       {
         "time": "14:00",
-        "location": "Riverside Terrace",
-        "event": "Relax",
-        "mood": "しあわせ",
-        "text": "隅田川を眺めながらのんびり読書。",
-        "image": "https://images.unsplash.com/photo-1517705008128-361805f42e86?auto=format&fit=crop&w=800&q=80"
+        "location": "ビーチサイド",
+        "event": "Relaxing",
+        "mood": "のんびり",
+        "text": "この青さをずっと眺めていたい。",
+        "image": "https://images.unsplash.com/photo-1538935339241-8d9ef73fc56d?auto=format&fit=crop&w=800&q=80"
+      }
+    ]
+  },
+  {
+    "id": "sample4",
+    "userName": "Ken",
+    "title": "北海道、一面の銀世界",
+    "date": "2024.05.15",
+    "location": "北海道 / 美瑛",
+    "thumbnail": "https://images.unsplash.com/photo-1516466723877-e4ec1d736c8a?auto=format&fit=crop&w=800&q=80",
+    "description": "まだ雪が残るパッチワークの路。静寂の中でシャッターを切る瞬間が一番好き。",
+    "timeline": [
+      {
+        "time": "08:00",
+        "location": "美瑛の丘",
+        "event": "Shooting",
+        "mood": "ワクワク",
+        "text": "凛とした空気感がたまらない。",
+        "image": "https://images.unsplash.com/photo-1516466723877-e4ec1d736c8a?auto=format&fit=crop&w=800&q=80"
       }
     ]
   }
