@@ -1,17 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
     const contentGrid = document.getElementById('content-grid');
     const tabBtns = document.querySelectorAll('.tab-btn');
-    const vlogFilters = document.getElementById('vlog-filters');
     const modal = document.getElementById('video-modal');
     const modalContent = document.querySelector('.modal-content');
     const closeModal = document.querySelector('.close-modal');
-    const modalIframe = document.getElementById('modal-iframe');
     const modalTitle = document.getElementById('modal-title');
     const modalDescription = document.getElementById('modal-description');
 
     let vlogsData = [];
     let tripsData = [];
-    let currentTab = 'vlog';
+    let currentTab = 'trip'; // デフォルトを旅ログに
+
+    // 初期タブの設定
+    document.querySelector('[data-tab="trip"]').classList.add('active');
+    document.querySelector('[data-tab="vlog"]').classList.remove('active');
 
     // Fetch All Data
     Promise.all([
@@ -23,44 +25,39 @@ document.addEventListener('DOMContentLoaded', () => {
         renderContent();
     }).catch(error => console.error('Error loading data:', error));
 
-    // Render Logic
-    function renderContent(filteredData = null) {
+    function renderContent() {
         contentGrid.innerHTML = '';
-        const dataToRender = filteredData || (currentTab === 'vlog' ? vlogsData : tripsData);
+        const dataToRender = currentTab === 'vlog' ? vlogsData : tripsData;
 
         dataToRender.forEach(item => {
             const card = document.createElement('div');
             card.className = 'vlog-card reveal';
             
+            const dateStr = item.date || "TODAY";
+            const locationStr = item.location || "Somewhere";
+
+            card.innerHTML = `
+                <div class="card-header">
+                    <div class="user-avatar">ME</div>
+                    <div class="card-user-info">
+                        <h3>My Memory</h3>
+                        <span>${dateStr}</span>
+                    </div>
+                </div>
+                <div class="card-thumbnail">
+                    <img src="${item.thumbnail}" alt="${item.title}">
+                    <div class="card-overlay-info">
+                        <span class="location-tag">📍 ${locationStr}</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <p>${item.title}</p>
+                </div>
+            `;
+            
             if (currentTab === 'vlog') {
-                card.innerHTML = `
-                    <div class="card-thumbnail">
-                        <img src="${item.thumbnail}" alt="${item.title}">
-                        <div class="play-overlay">
-                            <div class="play-btn-circle">▶</div>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <span class="card-category">${item.category}</span>
-                        <h3>${item.title}</h3>
-                        <p>${item.description}</p>
-                    </div>
-                `;
                 card.addEventListener('click', () => openVideoModal(item));
             } else {
-                card.innerHTML = `
-                    <div class="card-thumbnail">
-                        <img src="${item.thumbnail}" alt="${item.title}">
-                        <div class="play-overlay">
-                            <div class="play-btn-circle">📖</div>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <span class="card-category">${item.date}</span>
-                        <h3>${item.title}</h3>
-                        <p>${item.description}</p>
-                    </div>
-                `;
                 card.addEventListener('click', () => openTripModal(item));
             }
             contentGrid.appendChild(card);
@@ -75,75 +72,51 @@ document.addEventListener('DOMContentLoaded', () => {
             tabBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             currentTab = btn.getAttribute('data-tab');
-            
-            // Show/Hide Vlog Filters
-            vlogFilters.style.display = currentTab === 'vlog' ? 'flex' : 'none';
-            
             renderContent();
         });
     });
 
-    // Vlog Filter Logic
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            filterBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const filter = btn.getAttribute('data-filter');
-            const filteredVlogs = filter === 'all' 
-                ? vlogsData 
-                : vlogsData.filter(v => v.category === filter);
-            renderContent(filteredVlogs);
-        });
-    });
-
-    // Modal Logic - Video
     function openVideoModal(vlog) {
-        modalContent.className = 'modal-content';
-        document.querySelector('.video-container').style.display = 'block';
+        // シンプルにするため、動画もタイムライン風の全画面表示に
         modalTitle.textContent = vlog.title;
-        modalDescription.textContent = vlog.description;
-        modalIframe.src = vlog.videoUrl;
+        modalDescription.innerHTML = `
+            <div style="width:100%; aspect-ratio:16/9; margin-bottom:2rem;">
+                <iframe src="${vlog.videoUrl}" style="width:100%; height:100%; border-radius:15px;" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <p style="padding:0 1rem;">${vlog.description}</p>
+        `;
         modal.style.display = 'block';
         document.body.style.overflow = 'hidden';
     }
 
-    // Modal Logic - Trip Timeline
     function openTripModal(trip) {
-        modalContent.className = 'modal-content timeline-mode';
-        document.querySelector('.video-container').style.display = 'none';
-        
         modalTitle.textContent = trip.title;
         let timelineHtml = `<div class="timeline-container">`;
         trip.timeline.forEach(item => {
             timelineHtml += `
-                <div class="timeline-item">
-                    <span class="timeline-time">${item.time}</span>
+                <div class="timeline-item reveal">
+                    <span class="timeline-time-label">${item.time} @ ${item.location || ''}</span>
                     <div class="timeline-card">
-                        <span class="timeline-mood">今の気分: ${item.mood}</span>
-                        <h4>${item.event}</h4>
-                        <p>${item.text}</p>
-                        ${item.image ? `<img src="${item.image}" class="timeline-image">` : ''}
+                        <img src="${item.image}" class="timeline-image">
+                        <div class="timeline-detail">
+                            <span class="timeline-mood-tag">${item.mood}</span>
+                            <h4>${item.event}</h4>
+                            <p>${item.text}</p>
+                        </div>
                     </div>
                 </div>
             `;
         });
         timelineHtml += `</div>`;
         modalDescription.innerHTML = timelineHtml;
-        
-        modalIframe.src = '';
         modal.style.display = 'block';
         document.body.style.overflow = 'hidden';
+        setTimeout(initRevealAnimations, 100);
     }
 
     closeModal.addEventListener('click', () => {
         modal.style.display = 'none';
-        modalIframe.src = '';
         document.body.style.overflow = 'auto';
-    });
-
-    window.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal.click();
     });
 
     function initRevealAnimations() {
