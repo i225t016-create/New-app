@@ -35,7 +35,11 @@ document.addEventListener('DOMContentLoaded', () => {
     onAuthStateChanged(auth, (user) => {
         currentUser = user;
         if (user) {
-            authStatus.innerHTML = `<span class="user-name">Hello, ${user.email.split('@')[0]}</span> | <button id="logout-btn" class="btn-text">ログアウト</button>`;
+            const userName = user.email.split('@')[0];
+            authStatus.innerHTML = `
+                <div class="user-badge">${userName}</div>
+                <button id="logout-btn" class="btn-text">ログアウト</button>
+            `;
             document.getElementById('logout-btn').onclick = () => signOut(auth);
         } else {
             authStatus.innerHTML = `<button id="login-trigger" class="btn-text">ログイン</button>`;
@@ -46,8 +50,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Content Rendering ---
     async function renderContent() {
-        contentGrid.innerHTML = '<p style="text-align:center; padding:2rem;">読み込み中...</p>';
+        contentGrid.innerHTML = '';
         let posts = [];
+
+        if (currentView === 'mypage') {
+            if (!currentUser) {
+                contentGrid.innerHTML = '<p style="text-align:center; padding:5rem; color:#8e8e93;">ログインして自分の記録を残そう。</p>';
+                return;
+            }
+            
+            // プロフィールヘッダーを表示
+            const profileHeader = document.createElement('div');
+            profileHeader.className = 'profile-header container reveal';
+            const userName = currentUser.email.split('@')[0];
+            profileHeader.innerHTML = `
+                <div class="profile-avatar-large">${userName.substring(0,1).toUpperCase()}</div>
+                <div class="profile-info">
+                    <h2>${userName}</h2>
+                    <div class="profile-stats">
+                        <div class="stat-item"><span class="stat-value" id="post-count">-</span><span class="stat-label">Posts</span></div>
+                        <div class="stat-item"><span class="stat-value">0</span><span class="stat-label">Following</span></div>
+                        <div class="stat-item"><span class="stat-value">0</span><span class="stat-label">Followers</span></div>
+                    </div>
+                </div>
+            `;
+            contentGrid.appendChild(profileHeader);
+        }
+
+        const gridContainer = document.createElement('div');
+        gridContainer.className = 'vlog-grid container';
+        contentGrid.appendChild(gridContainer);
+        gridContainer.innerHTML = '<p style="text-align:center; padding:2rem;">読み込み中...</p>';
 
         try {
             if (currentView === 'feed') {
@@ -55,23 +88,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 const querySnapshot = await getDocs(q);
                 querySnapshot.forEach((doc) => posts.push({id: doc.id, ...doc.data()}));
             } else if (currentView === 'mypage') {
-                if (!currentUser) {
-                    contentGrid.innerHTML = '<p style="text-align:center; padding:2rem;">ログインすると自分の投稿が見れるよ！</p>';
-                    return;
-                }
                 const q = query(collection(db, "posts"), where("userId", "==", currentUser.uid), orderBy("createdAt", "desc"));
                 const querySnapshot = await getDocs(q);
                 querySnapshot.forEach((doc) => posts.push({id: doc.id, ...doc.data()}));
+                
+                // 投稿数を更新
+                const postCountEl = document.getElementById('post-count');
+                if (postCountEl) postCountEl.textContent = posts.length;
             }
         } catch (e) {
             console.error("Error fetching posts:", e);
-            contentGrid.innerHTML = '<p style="text-align:center; padding:2rem;">データの取得に失敗しました。Firebaseの設定を確認してね。</p>';
+            gridContainer.innerHTML = '<p style="text-align:center; padding:2rem; color:#8e8e93;">データの取得に失敗しました。<br>Firebaseの設定を確認してください。</p>';
             return;
         }
 
-        contentGrid.innerHTML = '';
+        gridContainer.innerHTML = '';
         if (posts.length === 0) {
-            contentGrid.innerHTML = '<p style="text-align:center; padding:2rem;">まだ投稿がありません。</p>';
+            gridContainer.innerHTML = '<p style="text-align:center; padding:5rem; color:#8e8e93;">まだ投稿がありません。</p>';
         }
 
         posts.forEach(item => {
@@ -79,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
             card.className = 'vlog-card reveal';
             card.innerHTML = `
                 <div class="card-header">
-                    <div class="user-avatar">${(item.userName || "??").substring(0,2).toUpperCase()}</div>
+                    <div class="user-avatar">${(item.userName || "??").substring(0,1).toUpperCase()}</div>
                     <div class="card-user-info">
                         <h3>${item.userName || "Guest"}</h3>
                         <span>${item.date || "TODAY"}</span>
@@ -96,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
             card.addEventListener('click', () => openTripModal(item));
-            contentGrid.appendChild(card);
+            gridContainer.appendChild(card);
         });
         setTimeout(initRevealAnimations, 100);
     }

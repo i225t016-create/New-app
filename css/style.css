@@ -292,39 +292,156 @@ body {
     color: var(--text-color);
 }
 
-/* Form Styles */
+/* Form Styles - Polished */
 .auth-form-content, .post-form-content {
-    max-width: 400px;
-    padding: 2.5rem;
-    background: #1c1c1e;
+    max-width: 440px;
+    padding: 3rem;
+    background: #000;
+    border: 1px solid #333;
+    border-radius: 30px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
-.post-form-content {
-    max-width: 500px;
+#auth-forms h2, .post-form-content h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.05em;
+}
+
+#auth-forms p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+#auth-forms a {
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 1px solid #fff;
 }
 
 input, textarea {
     width: 100%;
-    padding: 1rem;
+    padding: 1.2rem;
     margin-bottom: 1rem;
-    background: #2c2c2e;
-    border: 1px solid #3a3a3c;
-    border-radius: 12px;
+    background: #1c1c1e;
+    border: 2px solid transparent;
+    border-radius: 18px;
     color: white;
     font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.2s ease;
 }
 
-.timeline-input-area {
-    margin: 1.5rem 0;
-    padding: 1rem;
-    border: 1px dashed #444;
-    border-radius: 15px;
+input:focus, textarea:focus {
+    outline: none;
+    border-color: #444;
+    background: #2c2c2e;
 }
 
-.timeline-input-area h3 {
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
+.btn-primary {
+    width: 100%;
+    padding: 1.2rem;
+    border-radius: 18px;
+    background: #fff;
+    color: #000;
+    font-size: 1rem;
+    font-weight: 800;
+    margin-top: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.1s active;
+}
+
+.btn-primary:active {
+    transform: scale(0.98);
+}
+
+/* Profile Section Styles */
+.profile-header {
+    padding: 3rem 0;
+    text-align: center;
+    border-bottom: 1px solid #1c1c1e;
+    margin-bottom: 2rem;
+}
+
+.profile-avatar-large {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(45deg, #333, #111);
+    border-radius: 40px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: 800;
+    border: 1px solid #333;
+}
+
+.profile-info h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.profile-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    margin-top: 1.5rem;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-value {
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+.stat-label {
+    font-size: 0.75rem;
     color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Auth Status in Header */
+.auth-status {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-badge {
+    background: #1c1c1e;
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border: 1px solid #333;
+}
+
+/* Modal Close Button */
+.close-auth-modal, .close-post-modal {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-auth-modal:hover, .close-post-modal:hover {
+    color: #fff;
 }
 
 /* Animation */
