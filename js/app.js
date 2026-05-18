@@ -28,6 +28,24 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentView = 'feed';
     let myPostIds = JSON.parse(localStorage.getItem('myPostIds') || '[]');
 
+    // --- Demo Info Modal Logic ---
+    const demoInfoModal = document.getElementById('demo-info-modal');
+    const demoInfoTrigger = document.getElementById('demo-info-trigger');
+    const closeDemoModals = document.querySelectorAll('.close-demo-modal');
+
+    // 初回起動時にデモ案内を表示
+    if (!localStorage.getItem('demoShown')) {
+        setTimeout(() => {
+            demoInfoModal.style.display = 'block';
+            localStorage.setItem('demoShown', 'true');
+        }, 1000);
+    }
+
+    demoInfoTrigger.onclick = () => demoInfoModal.style.display = 'block';
+    closeDemoModals.forEach(btn => {
+        btn.onclick = () => demoInfoModal.style.display = 'none';
+    });
+
     renderContent();
 
     // --- Content Rendering ---

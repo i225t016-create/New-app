@@ -15,12 +15,38 @@
 <body class="light-theme">
     <header class="main-header">
         <div class="container header-flex">
-            <div class="logo">🎥 ぶい<span>ログ！</span></div>
+            <div class="logo">🎥 ぶい<span>ログ！</span> <small style="font-size: 0.6rem; background: #333; padding: 2px 6px; border-radius: 4px; vertical-align: middle;">DEMO</small></div>
             <div id="auth-status" class="auth-status">
-                <span class="user-badge">ゲストさん</span>
+                <button id="demo-info-trigger" class="btn-text" style="font-size: 1.2rem;">ℹ️</button>
             </div>
         </div>
     </header>
+
+    <!-- デモ案内モーダル -->
+    <div id="demo-info-modal" class="modal">
+        <div class="modal-content" style="max-width: 500px; padding: 2.5rem; background: #1c1c1e;">
+            <span class="close-demo-modal" style="position:absolute; top:1rem; right:1.5rem; cursor:pointer; font-size:1.5rem;">&times;</span>
+            <h2 style="margin-bottom: 1rem;">Project Information</h2>
+            <p style="font-size: 0.9rem; color: #8e8e93; margin-bottom: 1.5rem;">このサイトは大学の課題として制作された、次世代型Vlog共有プラットフォームのデモ版です。</p>
+            
+            <h3 style="font-size: 1rem; margin-bottom: 0.5rem;">🛠 使用技術</h3>
+            <ul style="font-size: 0.85rem; margin-bottom: 1.5rem; padding-left: 1.2rem;">
+                <li>HTML5 / CSS3 (Vanilla)</li>
+                <li>JavaScript (ES6+)</li>
+                <li><strong>Firebase</strong>: Firestoreによるリアルタイム共有</li>
+                <li><strong>Leaflet.js</strong>: 旅の軌跡を可視化するマップ機能</li>
+                <li><strong>LocalStorage</strong>: ログイン不要の個人投稿管理</li>
+            </ul>
+
+            <h3 style="font-size: 1rem; margin-bottom: 0.5rem;">✨ 注目機能</h3>
+            <ul style="font-size: 0.85rem; margin-bottom: 1.5rem; padding-left: 1.2rem;">
+                <li><strong>ジャーニー・マップ</strong>: 投稿詳細から旅のルートを地図上で確認できます。</li>
+                <li><strong>SNSフィード</strong>: 他のユーザー（デモデータ含む）の投稿を一覧できます。</li>
+                <li><strong>クイック投稿</strong>: アカウント作成不要で、即座に思い出を共有可能です。</li>
+            </ul>
+            <button class="btn btn-primary close-demo-modal">デモを体験する</button>
+        </div>
+    </div>
 
     <main>
         <!-- メインコンテンツ領域（フィード・マイページ） -->
