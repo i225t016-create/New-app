@@ -36,16 +36,20 @@
         <section id="gallery" class="gallery">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="reveal">みんなに見せたい動画たち</h2>
-                    <div class="filters reveal">
+                    <h2 class="reveal">みんなに見せたい思い出たち</h2>
+                    <div class="tab-controls reveal">
+                        <button class="tab-btn active" data-tab="vlog">動画（Vlog）</button>
+                        <button class="tab-btn" data-tab="trip">旅の記録（旅ログ）</button>
+                    </div>
+                    <div class="filters reveal" id="vlog-filters">
                         <button class="filter-btn active" data-filter="all">ぜんぶ</button>
                         <button class="filter-btn" data-filter="おでかけ">おでかけ</button>
                         <button class="filter-btn" data-filter="ガジェット">ガジェット</button>
                         <button class="filter-btn" data-filter="日常">日常</button>
                     </div>
                 </div>
-                <div id="vlog-grid" class="vlog-grid reveal">
-                    <!-- JavaScriptでここに動画カードが入ります -->
+                <div id="content-grid" class="vlog-grid reveal">
+                    <!-- JavaScriptでここに内容が入ります -->
                 </div>
             </div>
         </section>

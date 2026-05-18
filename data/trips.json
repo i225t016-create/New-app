@@ -1,0 +1,55 @@
+[
+  {
+    "id": "t1",
+    "title": "春の京都、のんびりひとり旅",
+    "date": "2024年4月10日",
+    "thumbnail": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80",
+    "description": "桜が満開の京都へ。美味しいものを食べて、たくさん歩いた3日間でした。",
+    "timeline": [
+      {
+        "time": "10:00",
+        "event": "京都駅に到着！",
+        "mood": "ワクワク",
+        "text": "ついに到着。空気が澄んでいて気持ちいい！まずはバスで嵐山へ向かいます。",
+        "image": "https://images.unsplash.com/photo-1542931287-023b922fa89b?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        "time": "12:30",
+        "event": "渡月橋を見ながらランチ",
+        "mood": "おいしい",
+        "text": "湯豆腐をいただきました。お出汁が優しくて、旅の始まりにぴったり。",
+        "image": "https://images.unsplash.com/photo-1528363504672-a309da53f58b?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        "time": "15:00",
+        "event": "竹林の道をおさんぽ",
+        "mood": "のんびり",
+        "text": "緑に囲まれてリフレッシュ。静かな時間が流れていて、心が落ち着きます。",
+        "image": "https://images.unsplash.com/photo-1598894591131-8b1097ba5823?auto=format&fit=crop&w=800&q=80"
+      }
+    ]
+  },
+  {
+    "id": "t2",
+    "title": "週末のキャンプ in 富士山麓",
+    "date": "2024年5月12日",
+    "thumbnail": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=800&q=80",
+    "description": "最高の天気に恵まれたキャンプ。富士山を眺めながらのコーヒーは格別でした。",
+    "timeline": [
+      {
+        "time": "09:00",
+        "event": "キャンプ場にチェックイン",
+        "mood": "ワクワク",
+        "text": "目の前に富士山！最高のロケーションにテンション上がります。",
+        "image": "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        "time": "18:00",
+        "event": "キャンプ飯タイム",
+        "mood": "おいしい",
+        "text": "今夜はカレー。外で食べるご飯はどうしてこんなに美味しいんだろう。",
+        "image": "https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=800&q=80"
+      }
+    ]
+  }
+]

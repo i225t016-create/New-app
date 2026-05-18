@@ -403,3 +403,99 @@ footer {
         display: none;
     }
 }
+
+/* --- New: Travel Log Styles --- */
+
+/* Tab Controls */
+.tab-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    position: relative;
+    transition: color var(--transition-speed);
+}
+
+.tab-btn.active {
+    color: var(--accent-color);
+}
+
+.tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    width: 80%;
+    height: 3px;
+    background: var(--accent-color);
+    border-radius: 10px;
+}
+
+/* Timeline Modal Expansion */
+.timeline-container {
+    padding: 1rem 0;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 3rem;
+    margin-bottom: 3rem;
+    border-left: 3px dashed var(--bg-secondary);
+}
+
+.timeline-item::before {
+    content: '📍';
+    position: absolute;
+    left: -1.2rem;
+    top: 0;
+    background: white;
+    font-size: 1.2rem;
+}
+
+.timeline-time {
+    font-weight: 700;
+    color: var(--accent-color);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.timeline-card {
+    background: var(--bg-color);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+}
+
+.timeline-mood {
+    display: inline-block;
+    background: var(--bg-secondary);
+    padding: 0.2rem 0.6rem;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.timeline-image {
+    width: 100%;
+    border-radius: 15px;
+    margin-top: 1rem;
+    display: block;
+}
+
+/* Modal Adjustments for Timeline */
+.modal-content.timeline-mode {
+    max-width: 600px;
+}
