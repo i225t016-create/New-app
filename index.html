@@ -17,7 +17,7 @@
         <div class="container header-flex">
             <div class="logo">🎥 ぶい<span>ログ！</span></div>
             <div id="auth-status" class="auth-status">
-                <button id="login-trigger" class="btn-text">ログイン</button>
+                <span class="user-badge">ゲストさん</span>
             </div>
         </div>
     </header>
@@ -28,7 +28,7 @@
             <div class="container">
                 <div class="tab-controls reveal">
                     <button class="tab-btn active" data-tab="feed">みんなの投稿</button>
-                    <button class="tab-btn" data-tab="mypage">自分の記録</button>
+                    <button class="tab-btn" data-tab="mypage">自分の投稿</button>
                 </div>
                 <div id="content-grid" class="vlog-grid reveal">
                     <!-- JavaScriptで投稿カードが入ります -->
@@ -41,32 +41,8 @@
     <nav class="bottom-nav">
         <button class="nav-item active" data-view="feed">🏠<span>ホーム</span></button>
         <button class="nav-item" id="post-trigger">➕<span>投稿</span></button>
-        <button class="nav-item" data-view="mypage">👤<span>マイページ</span></button>
+        <button class="nav-item" data-view="mypage">👤<span>自分の投稿</span></button>
     </nav>
-
-    <!-- 認証モーダル -->
-    <div id="auth-modal" class="modal">
-        <div class="modal-content auth-form-content">
-            <span class="close-auth-modal">&times;</span>
-            <div id="auth-forms">
-                <div id="login-form">
-                    <h2>おかえりなさい！</h2>
-                    <input type="email" id="login-email" placeholder="メールアドレス">
-                    <input type="password" id="login-password" placeholder="パスワード">
-                    <button id="login-btn" class="btn btn-primary">ログイン</button>
-                    <p>アカウントを持っていない？ <a href="#" id="to-signup">新規登録</a></p>
-                </div>
-                <div id="signup-form" style="display:none;">
-                    <h2>アカウント作成</h2>
-                    <input type="text" id="signup-name" placeholder="お名前">
-                    <input type="email" id="signup-email" placeholder="メールアドレス">
-                    <input type="password" id="signup-password" placeholder="パスワード">
-                    <button id="signup-btn" class="btn btn-primary">登録する</button>
-                    <p>すでにアカウントがある？ <a href="#" id="to-login">ログイン</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- 投稿モーダル -->
     <div id="post-modal" class="modal">
@@ -74,6 +50,7 @@
             <span class="close-post-modal">&times;</span>
             <h2>新しい思い出を投稿</h2>
             <div class="post-form">
+                <input type="text" id="post-user-name" placeholder="あなたのお名前">
                 <input type="text" id="post-title" placeholder="タイトル (例: 春の京都旅)">
                 <input type="text" id="post-location" placeholder="場所 (例: 京都 / 嵐山)">
                 <input type="text" id="post-thumbnail" placeholder="画像URL (Unsplashなど)">
