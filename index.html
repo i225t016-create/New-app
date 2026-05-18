@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VlogFolio | Professional Vlog Portfolio</title>
+    <title>ぶいログ！ | わたしの日常ポートフォリオ</title>
     <link rel="stylesheet" href="css/style.css">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
-<body class="dark-theme">
-    <header class="glass-header">
+<body class="light-theme">
+    <header class="main-header">
         <nav class="container">
-            <div class="logo">Vlog<span>Folio</span></div>
+            <div class="logo">🎥 ぶい<span>ログ！</span></div>
             <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#about">About</a></li>
+                <li><a href="#home">ホーム</a></li>
+                <li><a href="#gallery">ギャラリー</a></li>
+                <li><a href="#about">自己紹介</a></li>
             </ul>
         </nav>
     </header>
@@ -25,25 +25,27 @@
     <main>
         <section id="home" class="hero">
             <div class="container hero-content">
-                <h1 class="reveal">Cinematic Stories Through My Lens.</h1>
-                <p class="reveal">Exploring the world, one frame at a time. Welcome to my personal vlog portfolio.</p>
-                <a href="#gallery" class="btn btn-primary reveal">Explore Vlogs</a>
+                <div class="hero-text-box">
+                    <h1 class="reveal">日々の「楽しい」を、<br>動画でお届け！</h1>
+                    <p class="reveal">お散歩したり、何かを作ったり。私が見た素敵な景色や、ちょっとした日常をゆる〜く発信しています。</p>
+                    <a href="#gallery" class="btn btn-primary reveal">動画を見てみる</a>
+                </div>
             </div>
         </section>
 
         <section id="gallery" class="gallery">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="reveal">Vlog Gallery</h2>
+                    <h2 class="reveal">みんなに見せたい動画たち</h2>
                     <div class="filters reveal">
-                        <button class="filter-btn active" data-filter="all">All</button>
-                        <button class="filter-btn" data-filter="Travel">Travel</button>
-                        <button class="filter-btn" data-filter="Tech">Tech</button>
-                        <button class="filter-btn" data-filter="Daily">Daily</button>
+                        <button class="filter-btn active" data-filter="all">ぜんぶ</button>
+                        <button class="filter-btn" data-filter="おでかけ">おでかけ</button>
+                        <button class="filter-btn" data-filter="ガジェット">ガジェット</button>
+                        <button class="filter-btn" data-filter="日常">日常</button>
                     </div>
                 </div>
                 <div id="vlog-grid" class="vlog-grid reveal">
-                    <!-- Dynamic content will be loaded here -->
+                    <!-- JavaScriptでここに動画カードが入ります -->
                 </div>
             </div>
         </section>
@@ -51,22 +53,21 @@
         <section id="about" class="about">
             <div class="container about-flex">
                 <div class="about-text reveal">
-                    <h2>About Me</h2>
-                    <p>I am a filmmaker and storyteller dedicated to capturing the beauty of everyday life. From the bustling streets of Tokyo to the quiet moments at my desk, I believe every story deserves to be told with intention and style.</p>
+                    <h2>こんにちは！</h2>
+                    <p>動画を作ることが大好きなクリエイターです。日常の何気ない瞬間を「宝物」に変えるような、あたたかい動画作りを目指しています。ゆっくりしていってね！</p>
                     <div class="social-links">
-                        <a href="#" class="social-icon">YT</a>
-                        <a href="#" class="social-icon">IG</a>
-                        <a href="#" class="social-icon">TW</a>
+                        <a href="#" class="social-icon">YouTube</a>
+                        <a href="#" class="social-icon">Instagram</a>
                     </div>
                 </div>
                 <div class="about-stats reveal">
                     <div class="stat-card">
-                        <h3>100+</h3>
-                        <p>Videos</p>
+                        <h3>100本</h3>
+                        <p>つくった動画</p>
                     </div>
                     <div class="stat-card">
-                        <h3>50K+</h3>
-                        <p>Subscribers</p>
+                        <h3>5万人</h3>
+                        <p>フォロワーさん</p>
                     </div>
                 </div>
             </div>
@@ -75,11 +76,11 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2024 VlogFolio. Built with Passion.</p>
+            <p>&copy; 2024 ぶいログ！ ｜ 見てくれてありがとう！</p>
         </div>
     </footer>
 
-    <!-- Video Modal -->
+    <!-- 動画を見るためのポップアップ -->
     <div id="video-modal" class="modal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
