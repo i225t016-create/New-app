@@ -1,0 +1,34 @@
+[
+  {
+    "id": "1",
+    "title": "Tokyo City Lights - Night Walk",
+    "category": "Travel",
+    "description": "Exploring the neon streets of Shinjuku at midnight. A cinematic journey through the heart of Tokyo.",
+    "thumbnail": "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=800&q=80",
+    "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+  },
+  {
+    "id": "2",
+    "title": "My Minimal Desk Setup 2024",
+    "category": "Tech",
+    "description": "A deep dive into the gear I use for editing and productivity. Aesthetic and functional.",
+    "thumbnail": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
+    "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+  },
+  {
+    "id": "3",
+    "title": "Morning Routine: Coffee & Code",
+    "category": "Daily",
+    "description": "How I start my day to stay focused and creative. Not every morning is perfect, but this is the goal.",
+    "thumbnail": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80",
+    "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+  },
+  {
+    "id": "4",
+    "title": "Hiking the Japanese Alps",
+    "category": "Travel",
+    "description": "Breath-taking views from the summit. Nature at its finest.",
+    "thumbnail": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80",
+    "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+  }
+]

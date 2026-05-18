@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VlogFolio | Professional Vlog Portfolio</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body class="dark-theme">
+    <header class="glass-header">
+        <nav class="container">
+            <div class="logo">Vlog<span>Folio</span></div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container hero-content">
+                <h1 class="reveal">Cinematic Stories Through My Lens.</h1>
+                <p class="reveal">Exploring the world, one frame at a time. Welcome to my personal vlog portfolio.</p>
+                <a href="#gallery" class="btn btn-primary reveal">Explore Vlogs</a>
+            </div>
+        </section>
+
+        <section id="gallery" class="gallery">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="reveal">Vlog Gallery</h2>
+                    <div class="filters reveal">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="Travel">Travel</button>
+                        <button class="filter-btn" data-filter="Tech">Tech</button>
+                        <button class="filter-btn" data-filter="Daily">Daily</button>
+                    </div>
+                </div>
+                <div id="vlog-grid" class="vlog-grid reveal">
+                    <!-- Dynamic content will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <div class="container about-flex">
+                <div class="about-text reveal">
+                    <h2>About Me</h2>
+                    <p>I am a filmmaker and storyteller dedicated to capturing the beauty of everyday life. From the bustling streets of Tokyo to the quiet moments at my desk, I believe every story deserves to be told with intention and style.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-icon">YT</a>
+                        <a href="#" class="social-icon">IG</a>
+                        <a href="#" class="social-icon">TW</a>
+                    </div>
+                </div>
+                <div class="about-stats reveal">
+                    <div class="stat-card">
+                        <h3>100+</h3>
+                        <p>Videos</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>50K+</h3>
+                        <p>Subscribers</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 VlogFolio. Built with Passion.</p>
+        </div>
+    </footer>
+
+    <!-- Video Modal -->
+    <div id="video-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="video-container">
+                <iframe id="modal-iframe" src="" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div class="modal-info">
+                <h3 id="modal-title"></h3>
+                <p id="modal-description"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
