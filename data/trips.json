@@ -74,5 +74,81 @@
         "image": "https://images.unsplash.com/photo-1516466723877-e4ec1d736c8a?auto=format&fit=crop&w=800&q=80"
       }
     ]
+  },
+  {
+    "id": "sample5",
+    "userName": "Hina",
+    "title": "大阪・道頓堀の看板に圧倒！",
+    "date": "2024.05.14",
+    "location": "大阪 / 道頓堀",
+    "thumbnail": "https://images.unsplash.com/photo-1590250005527-727918398188?auto=format&fit=crop&w=800&q=80",
+    "description": "食べる、歩く、笑う！大阪のエネルギーを全身で浴びてきました。",
+    "timeline": [
+      {
+        "time": "19:00",
+        "location": "グリコ前",
+        "event": "Sightseeing",
+        "mood": "ワクワク",
+        "text": "やっぱりこの看板を見ると大阪に来た実感が湧く！",
+        "image": "https://images.unsplash.com/photo-1590250005527-727918398188?auto=format&fit=crop&w=800&q=80"
+      }
+    ]
+  },
+  {
+    "id": "sample6",
+    "userName": "Sora",
+    "title": "金沢、城下町の風情が素敵",
+    "date": "2024.05.13",
+    "location": "石川 / 東茶屋街",
+    "thumbnail": "https://images.unsplash.com/photo-1590272213032-4740e53a2688?auto=format&fit=crop&w=800&q=80",
+    "description": "格子戸が並ぶ美しい街並み。時が止まったような不思議な感覚。和菓子も美味しかった。",
+    "timeline": [
+      {
+        "time": "11:00",
+        "location": "東茶屋街",
+        "event": "Strolling",
+        "mood": "のんびり",
+        "text": "着物で歩いている人も多くて、とても絵になる場所でした。",
+        "image": "https://images.unsplash.com/photo-1590272213032-4740e53a2688?auto=format&fit=crop&w=800&q=80"
+      }
+    ]
+  },
+  {
+    "id": "sample7",
+    "userName": "Rina",
+    "title": "奈良公園で鹿とたわむれる",
+    "date": "2024.05.12",
+    "location": "奈良 / 奈良公園",
+    "thumbnail": "https://images.unsplash.com/photo-1552554668-525d57ca7851?auto=format&fit=crop&w=800&q=80",
+    "description": "鹿せんべいを持った瞬間の囲まれ具合にびっくり！でもみんな可愛かったです。",
+    "timeline": [
+      {
+        "time": "15:30",
+        "location": "大仏殿近く",
+        "event": "Deer Time",
+        "mood": "しあわせ",
+        "text": "丁寧にお辞儀してくれる鹿さんもいて癒やされた〜。",
+        "image": "https://images.unsplash.com/photo-1552554668-525d57ca7851?auto=format&fit=crop&w=800&q=80"
+      }
+    ]
+  },
+  {
+    "id": "sample8",
+    "userName": "Gaito",
+    "title": "横浜、みなとみらいの夜景",
+    "date": "2024.05.11",
+    "location": "神奈川 / 桜木町",
+    "thumbnail": "https://images.unsplash.com/photo-1579626602330-94f30c1737e3?auto=format&fit=crop&w=800&q=80",
+    "description": "仕事帰りにふらっと。海風に当たりながら眺める未来的な景色は何度見ても飽きない。",
+    "timeline": [
+      {
+        "time": "20:00",
+        "location": "万国橋",
+        "event": "Walking",
+        "mood": "のんびり",
+        "text": "水面に映るコスモワールドの観覧車が幻想的。",
+        "image": "https://images.unsplash.com/photo-1579626602330-94f30c1737e3?auto=format&fit=crop&w=800&q=80"
+      }
+    ]
   }
 ]
