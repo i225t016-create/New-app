@@ -16,11 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const authStatus = document.getElementById('auth-status');
     
     const authModal = document.getElementById('auth-modal');
-    const loginTrigger = document.getElementById('login-trigger');
     const closeAuthModal = document.querySelector('.close-auth-modal');
     
     const postModal = document.getElementById('post-modal');
-    const postTrigger = document.getElementById('post-trigger');
     const closePostModal = document.querySelector('.close-post-modal');
     
     const videoModal = document.getElementById('video-modal');
@@ -54,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let posts = [];
         let localSamples = [];
 
-        // Fetch Local Samples as Fallback/Featured
+        // Fetch Local Samples (Always visible in feed)
         try {
             const res = await fetch('data/trips.json');
             localSamples = await res.json();
@@ -65,27 +63,52 @@ document.addEventListener('DOMContentLoaded', () => {
                 contentGrid.innerHTML = '<p style="text-align:center; padding:5rem; color:#8e8e93;">ログインして自分の記録を残そう。</p>';
                 return;
             }
-            // ... (profile header logic remains same)
+            
+            // プロフィールヘッダーを表示
+            const profileHeader = document.createElement('div');
+            profileHeader.className = 'profile-header container reveal';
+            const userName = currentUser.email.split('@')[0];
+            profileHeader.innerHTML = `
+                <div class="profile-avatar-large">${userName.substring(0,1).toUpperCase()}</div>
+                <div class="profile-info">
+                    <h2>${userName}</h2>
+                    <div class="profile-stats">
+                        <div class="stat-item"><span class="stat-value" id="post-count">-</span><span class="stat-label">Posts</span></div>
+                        <div class="stat-item"><span class="stat-value">0</span><span class="stat-label">Following</span></div>
+                        <div class="stat-item"><span class="stat-value">0</span><span class="stat-label">Followers</span></div>
+                    </div>
+                </div>
+            `;
+            contentGrid.appendChild(profileHeader);
         }
 
-        // ... (gridContainer logic remains same)
+        const gridContainer = document.createElement('div');
+        gridContainer.className = 'vlog-grid container';
+        contentGrid.appendChild(gridContainer);
+        gridContainer.innerHTML = '<p style="text-align:center; padding:2rem; color:#8e8e93;">読み込み中...</p>';
 
         try {
             if (currentView === 'feed') {
-                const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
-                const querySnapshot = await getDocs(q);
-                querySnapshot.forEach((doc) => posts.push({id: doc.id, ...doc.data()}));
-                
-                // Merge with local samples if empty or for "Everyone's feed"
+                try {
+                    const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+                    const querySnapshot = await getDocs(q);
+                    querySnapshot.forEach((doc) => posts.push({id: doc.id, ...doc.data()}));
+                } catch (e) {
+                    console.warn("Firestore access failed, falling back to local samples.");
+                }
+                // Merge with local samples (Always shown in feed)
                 posts = [...posts, ...localSamples];
             } else if (currentView === 'mypage') {
                 const q = query(collection(db, "posts"), where("userId", "==", currentUser.uid), orderBy("createdAt", "desc"));
                 const querySnapshot = await getDocs(q);
                 querySnapshot.forEach((doc) => posts.push({id: doc.id, ...doc.data()}));
+                
+                // 投稿数を更新
+                const postCountEl = document.getElementById('post-count');
+                if (postCountEl) postCountEl.textContent = posts.length;
             }
         } catch (e) {
-            console.warn("Firestore access failed, using local samples only.");
-            if (currentView === 'feed') posts = localSamples;
+            console.error("Error fetching posts:", e);
         }
 
         gridContainer.innerHTML = '';
@@ -134,11 +157,11 @@ document.addEventListener('DOMContentLoaded', () => {
             date: new Date().toLocaleDateString(),
             createdAt: new Date(),
             timeline: [{
-                time: document.getElementById('tl-time-1').value,
-                event: document.getElementById('tl-event-1').value,
-                mood: document.getElementById('tl-mood-1').value,
-                text: document.getElementById('tl-text-1').value,
-                image: document.getElementById('post-thumbnail').value // 簡易化のためサムネイルと同じに
+                time: "12:00",
+                event: "New Post",
+                mood: "ワクワク",
+                text: document.getElementById('post-description').value,
+                image: document.getElementById('post-thumbnail').value
             }]
         };
 
@@ -149,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
             renderContent();
         } catch (e) {
             console.error("Error adding document: ", e);
-            alert("投稿に失敗しました。Firebaseの権限設定を確認してください。");
+            alert("投稿に失敗しました。Firebaseの設定を確認してください。");
         }
     };
 
@@ -157,21 +180,25 @@ document.addEventListener('DOMContentLoaded', () => {
     function openTripModal(trip) {
         modalTitle.textContent = trip.title;
         let timelineHtml = `<div class="timeline-container">`;
-        trip.timeline.forEach(item => {
-            timelineHtml += `
-                <div class="timeline-item reveal">
-                    <span class="timeline-time-label">${item.time}</span>
-                    <div class="timeline-card">
-                        ${item.image ? `<img src="${item.image}" class="timeline-image">` : ''}
-                        <div class="timeline-detail">
-                            <span class="timeline-mood-tag">${item.mood}</span>
-                            <h4>${item.event}</h4>
-                            <p>${item.text}</p>
+        if (trip.timeline && trip.timeline.length > 0) {
+            trip.timeline.forEach(item => {
+                timelineHtml += `
+                    <div class="timeline-item reveal">
+                        <span class="timeline-time-label">${item.time}</span>
+                        <div class="timeline-card">
+                            ${item.image ? `<img src="${item.image}" class="timeline-image">` : ''}
+                            <div class="timeline-detail">
+                                <span class="timeline-mood-tag">${item.mood}</span>
+                                <h4>${item.event}</h4>
+                                <p>${item.text}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            `;
-        });
+                `;
+            });
+        } else {
+            timelineHtml += `<p style="padding:2rem; color:#8e8e93;">タイムラインの詳細はまだありません。</p>`;
+        }
         timelineHtml += `</div>`;
         modalDescription.innerHTML = timelineHtml;
         videoModal.style.display = 'block';
@@ -214,11 +241,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Auth Form Toggle
-    document.getElementById('to-signup').onclick = () => {
+    document.getElementById('to-signup').onclick = (e) => {
+        e.preventDefault();
         document.getElementById('login-form').style.display = 'none';
         document.getElementById('signup-form').style.display = 'block';
     };
-    document.getElementById('to-login').onclick = () => {
+    document.getElementById('to-login').onclick = (e) => {
+        e.preventDefault();
         document.getElementById('login-form').style.display = 'block';
         document.getElementById('signup-form').style.display = 'none';
     };
